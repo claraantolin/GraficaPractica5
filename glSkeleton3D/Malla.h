@@ -49,16 +49,36 @@ class Malla
         };
 
         void dibuja(){
-        	for (int i = 0; i < numCaras; i++) {
+
+			GLdouble normalX, normalY, normalZ;
+			GLdouble verticeX, verticeY, verticeZ;
+
+			for (int i = 0; i < numCaras; i++) {
+				glColor3d(0,0,0);
 				glLineWidth(1.0);
 				glBegin(GL_POLYGON); //o glBegin(GL_LINE_LOOP);
+
 				for (int j = 0; j < cara[i]-> getNumVertices(); j++) {
+
 					int iN = cara[i]-> getIndiceNormalK(j);
 					int iV = cara[i]-> getIndiceVerticeK(j);
-					glNormal3f(normal[iN]->getX(),normal[i]->getY(),normal[iN]->getZ());
+
+					normalX = normal[iN]->getX();
+					normalY = normal[iN]->getY();
+					normalZ = normal[iN]->getZ();
+
+					glNormal3d(normalX,normalY,normalZ);
+					//glNormal3f(normal[iN]->getX(),normal[i]->getY(),normal[iN]->getZ());
+					
 					//Si hubiera coordenadas de textura, aqui se suministrarian
 					//las coordenadas de textura del vertice j con glTexCoor2f(...);
-					glVertex3f(vertice[iV]->getX(),vertice[iV]->getY(),vertice[iV]->getZ());
+
+					verticeX = vertice[iV]->getX();
+					verticeY = vertice[iV]->getY();
+					verticeZ = vertice[iV]->getZ();
+
+					glVertex3d(verticeX,verticeY,verticeZ);
+					//glVertex3f(vertice[iV]->getX(),vertice[iV]->getY(),vertice[iV]->getZ());
 				}
 				glEnd();
 			}

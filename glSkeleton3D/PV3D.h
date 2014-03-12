@@ -16,23 +16,23 @@ class PV3D
 {
    private:
         // Coordenadas de un Punto o Vector en tres dimensiones
-        GLfloat x;
-        GLfloat y;
-        GLfloat z;
+        GLdouble x;
+        GLdouble y;
+        GLdouble z;
 
         int pv;
 
    public:
         PV3D();
-        PV3D(GLfloat newX, GLfloat newY, GLfloat newZ){ x=newX; y=newY; z = newZ; };
+        PV3D(GLdouble newX, GLdouble newY, GLdouble newZ){ x=newX; y=newY; z = newZ; };
         ~PV3D(){ x=0 ; y=0; x=0;};
-        GLfloat getX(){return x;};
-        GLfloat getY(){return y;};
-        GLfloat getZ(){return z;};
-        void setCoor(GLfloat newX, GLfloat newY, GLfloat newZ){x=newX; y=newY; z=newZ;};
-        void setX(GLfloat newX){x=newX;};
-        void setY(GLfloat newY){y=newY;};
-        void setZ(GLfloat newZ){y=newZ;};
+        GLdouble getX(){return x;};
+        GLdouble getY(){return y;};
+        GLdouble getZ(){return z;};
+        void setCoor(GLdouble newX, GLdouble newY, GLdouble newZ){x=newX; y=newY; z=newZ;};
+        void setX(GLdouble newX){x=newX;};
+        void setY(GLdouble newY){y=newY;};
+        void setZ(GLdouble newZ){y=newZ;};
         
         void normaliza(){
             // TODO
@@ -44,7 +44,7 @@ class PV3D
         }
 
 
-        GLfloat profuctoEscalar(PV3D* v){
+        GLdouble profuctoEscalar(PV3D* v){
             // TODO
             return 0;
         }

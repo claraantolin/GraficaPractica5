@@ -60,59 +60,6 @@ void __fastcall TGLForm3D::FormCreate(TObject *Sender) {
     //ClientWidth=400;
     //ClientHeight=400;
     RatioViewPort=1.0;
-
-
-// Creamos una malla
-
-    int numVertices = 4;
-    
-    PV3D** vertice = new PV3D*[numVertices];
-    vertice[0] = new PV3D(0,0,0);
-    vertice[1] = new PV3D(1,0,0);
-    vertice[2] = new PV3D(0,1,0);
-    vertice[3] = new PV3D(0,0,1);
-
-    int numNormales = 4;
-
-    PV3D** normal = new PV3D*[numNormales];
-    normal[0] = new PV3D(0.577,0.577,0.577);
-    normal[1] = new PV3D(0,0,-1);
-    normal[2] = new PV3D(-1,0,0);
-    normal[3] = new PV3D(0,-1,0);
-
-    int numVerticeNormal = 3;
-
-    VerticeNormal** arrayVN0 = new VerticeNormal*[numVerticeNormal];
-    arrayVN0[0] = new VerticeNormal(1,0);
-    arrayVN0[1] = new VerticeNormal(2,0);
-    arrayVN0[2] = new VerticeNormal(3,0);
-
-    VerticeNormal** arrayVN1 = new VerticeNormal*[numVerticeNormal];
-    arrayVN1[0] = new VerticeNormal(0,1);
-    arrayVN1[1] = new VerticeNormal(2,1);
-    arrayVN1[2] = new VerticeNormal(1,1);
-
-    VerticeNormal** arrayVN2 = new VerticeNormal*[numVerticeNormal];
-    arrayVN2[0] = new VerticeNormal(0,2);
-    arrayVN2[1] = new VerticeNormal(3,2);
-    arrayVN2[2] = new VerticeNormal(2,2);
-
-    VerticeNormal** arrayVN3 = new VerticeNormal*[numVerticeNormal];
-    arrayVN3[0] = new VerticeNormal(1,3);
-    arrayVN3[1] = new VerticeNormal(3,3);
-    arrayVN3[2] = new VerticeNormal(0,3);
-
-    int numCaras = 4;
-
-    Cara** cara = new Cara*[numCaras];
-    cara[0] = new Cara(3,arrayVN0);
-    cara[1] = new Cara(3,arrayVN1);
-    cara[2] = new Cara(3,arrayVN2);
-    cara[3] = new Cara(3,arrayVN3);
-
-    malla = new Malla(numVertices, vertice, numNormales, normal, numCaras, cara);
-
-// Fin crear malla
     
     //Luz0
     glEnable(GL_LIGHT0);
@@ -190,23 +137,23 @@ void __fastcall TGLForm3D::GLScene() {
 
     //Dibujo de los ejes
     glBegin(GL_LINES);
-        glColor4f(1.0, 0.0, 0.0, 1.0);
-        glVertex3f(0.0, 0.0, 0.0);
-        glVertex3f(10.0, 0.0, 0.0);
+        glColor4d(1.0, 0.0, 0.0, 1.0);
+        glVertex3d(0.0, 0.0, 0.0);
+        glVertex3d(10.0, 0.0, 0.0);
 
-        glColor4f(0.0, 1.0, 0.0, 1.0);
-        glVertex3f(0.0, 0.0, 0.0);
-        glVertex3f(0.0, 10.0, 0.0);
+        glColor4d(0.0, 1.0, 0.0, 1.0);
+        glVertex3d(0.0, 0.0, 0.0);
+        glVertex3d(0.0, 10.0, 0.0);
 
-        glColor4f(0.0, 0.0, 1.0, 1.0);
-        glVertex3f(0.0, 0.0, 0.0);
-        glVertex3f(0.0, 0.0, 10.0);
+        glColor4d(0.0, 0.0, 1.0, 1.0);
+        glVertex3d(0.0, 0.0, 0.0);
+        glVertex3d(0.0, 0.0, 10.0);
     glEnd();
 
     //Dibujo de la esfera blanca
-    glColor3f(1.0, 1.0, 1.0);
+    /*glColor3d(1.0, 1.0, 1.0);
     gluQuadricDrawStyle(esfera, GLU_FILL);
-    gluSphere(esfera, 3, 30, 30); 
+    gluSphere(esfera, 3, 30, 30); */
 
     malla->dibuja();
 
@@ -229,8 +176,6 @@ void __fastcall TGLForm3D::FormDestroy(TObject *Sender) {
     ReleaseDC(Handle,hdc);
     wglMakeCurrent(NULL,NULL);
     wglDeleteContext(hrc);
-
-    delete malla;
 }
 
 //---------------------------------------------------------------------------
@@ -238,6 +183,59 @@ void __fastcall TGLForm3D::FormDestroy(TObject *Sender) {
 
 void TGLForm3D::crearObjetosEscena() {
     esfera=gluNewQuadric();
+
+    // Creamos una malla
+
+    int numVertices = 4;
+    
+    PV3D** vertice = new PV3D*[numVertices];
+    vertice[0] = new PV3D(0,0,0);
+    vertice[1] = new PV3D(1,0,0);
+    vertice[2] = new PV3D(0,1,0);
+    vertice[3] = new PV3D(0,0,1);
+
+    int numNormales = 4;
+
+    PV3D** normal = new PV3D*[numNormales];
+    normal[0] = new PV3D(0.577,0.577,0.577);
+    normal[1] = new PV3D(0,0,-1);
+    normal[2] = new PV3D(-1,0,0);
+    normal[3] = new PV3D(0,-1,0);
+
+    int numVerticeNormal = 3;
+
+    VerticeNormal** arrayVN0 = new VerticeNormal*[numVerticeNormal];
+    arrayVN0[0] = new VerticeNormal(1,0);
+    arrayVN0[1] = new VerticeNormal(2,0);
+    arrayVN0[2] = new VerticeNormal(3,0);
+
+    VerticeNormal** arrayVN1 = new VerticeNormal*[numVerticeNormal];
+    arrayVN1[0] = new VerticeNormal(0,1);
+    arrayVN1[1] = new VerticeNormal(2,1);
+    arrayVN1[2] = new VerticeNormal(1,1);
+
+    VerticeNormal** arrayVN2 = new VerticeNormal*[numVerticeNormal];
+    arrayVN2[0] = new VerticeNormal(0,2);
+    arrayVN2[1] = new VerticeNormal(3,2);
+    arrayVN2[2] = new VerticeNormal(2,2);
+
+    VerticeNormal** arrayVN3 = new VerticeNormal*[numVerticeNormal];
+    arrayVN3[0] = new VerticeNormal(1,3);
+    arrayVN3[1] = new VerticeNormal(3,3);
+    arrayVN3[2] = new VerticeNormal(0,3);
+
+    int numCaras = 4;
+
+    Cara** cara = new Cara*[numCaras];
+    cara[0] = new Cara(3,arrayVN0);
+    cara[1] = new Cara(3,arrayVN1);
+    cara[2] = new Cara(3,arrayVN2);
+    cara[3] = new Cara(3,arrayVN3);
+
+    malla = new Malla(numVertices, vertice, numNormales, normal, numCaras, cara);
+
+// Fin crear malla
+
 }
 
 //---------------------------------------------------------------------------
@@ -245,5 +243,6 @@ void TGLForm3D::crearObjetosEscena() {
 
 void TGLForm3D::liberarObjetosEscena() {
     gluDeleteQuadric(esfera);
+    delete malla;
 }
 
