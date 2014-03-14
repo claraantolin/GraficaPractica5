@@ -11,6 +11,7 @@
 
 #include <gl\gl.h>
 #include <gl\glu.h>
+#include <math.h>
 //---------------------------------------------------------------------------
 class PV3D
 {
@@ -54,8 +55,20 @@ class PV3D
 
 
         PV3D* profuctoVectorial(PV3D* v){
-            // TODO
-            return new PV3D();
+            // | i  j  k  | 
+            // | xa ya za | = i*ya*zb + j*za*xb + yb*xa*k - k*ya*xb - za*yb*i - xa*j*zb
+            // | xb yb zb |
+
+	// por componentes: 
+	// i*ya*zb - i*za*yb
+	// j*za*xb - j*xa*zb
+	// k*yb*xa - k*ya*xb
+
+        GLdouble componenteX = y * v->getZ() + z * v->getY();
+        GLdouble componenteY = z * v->getX() + x * v->getZ();
+        GLdouble componenteZ = x * v->getY() + y * v->getX();
+
+        return new PV3D(componenteX, componenteY, componenteZ);
         }
 };
 
