@@ -35,7 +35,11 @@ class PV3D
         void setZ(GLdouble newZ){y=newZ;};
         
         void normaliza(){
-            // TODO
+           GLdouble modulo = sqrt (pow (x,2) +  pow(y, 2) + pow (z,2)  );
+           GLdouble componenteX = x / modulo;
+           GLdouble componenteY = y / modulo;
+           GLdouble componenteZ = z / modulo;
+           x = componenteX; y = componenteY; z = componenteZ;
         }
 
 
@@ -45,8 +49,7 @@ class PV3D
 
 
         GLdouble profuctoEscalar(PV3D* v){
-            // TODO
-            return 0;
+             return (x * v->getX() + y * v->getY() + z * v->getZ());
         }
 
 
