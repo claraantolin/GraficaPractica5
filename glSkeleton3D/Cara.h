@@ -29,8 +29,8 @@ class Cara
         }
         int getNumVertices(){ return numVertices; }
         VerticeNormal** getArrayVN(){ return arrayVN; }
-        int getIndiceNormalK(int k){ return arrayVN[k]->getVerticeVertice(); }
-        int getIndiceVerticeK(int k){ return arrayVN[k]->getVerticeNormal(); }
+        int getIndiceNormal(int k){ return arrayVN[k]->getVerticeVertice(); }
+        int getIndiceVertice(int k){ return arrayVN[k]->getVerticeNormal(); }
 };
 
 #endif

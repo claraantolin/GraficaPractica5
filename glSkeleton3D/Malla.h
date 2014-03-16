@@ -60,8 +60,8 @@ class Malla
 
 				for (int j = 0; j < cara[i]-> getNumVertices(); j++) {
 
-					int iN = cara[i]-> getIndiceNormalK(j);
-					int iV = cara[i]-> getIndiceVerticeK(j);
+					int iN = cara[i]-> getIndiceNormal(j);
+					int iV = cara[i]-> getIndiceVertice(j);
 
 					normalX = normal[iN]->getX();
 					normalY = normal[iN]->getY();
@@ -83,6 +83,26 @@ class Malla
 				glEnd();
 			}
 	    }// Dibuja
+
+		PV3D* CalculoVectorNormalPorNewell(Cara* c){
+
+			GLdouble x = 0; GLdouble y = 0; GLdouble z = 0;
+			PV3D* vertActual; PV3D* vertSiguiente;
+
+			for(int i = 0; i < c->getNumVertices(); i++){
+				vertActual = vertice[c->getIndiceVertice(i)];
+				vertSiguiente = vertice[c->getIndiceVertice((i+1) % c->getNumVertices())];
+				x += (vertActual->getY() - vertSiguiente->getY()) * (vertActual->getZ() + vertSiguiente->getZ());
+				y += (vertActual->getZ() - vertSiguiente->getZ()) * (vertActual->getX() + vertSiguiente->getX());
+				z += (vertActual->getX() - vertSiguiente->getX()) * (vertActual->getY() + vertSiguiente->getY());
+
+			}
+
+			PV3D* n = new PV3D(x,y,z);
+			n->normaliza();
+			return n;
+
+		}// CalculoVectorNormalPorNewell
 };
 
 #endif

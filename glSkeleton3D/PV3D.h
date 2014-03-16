@@ -33,16 +33,17 @@ class PV3D
         void setCoor(GLdouble newX, GLdouble newY, GLdouble newZ){x=newX; y=newY; z=newZ;};
         void setX(GLdouble newX){x=newX;};
         void setY(GLdouble newY){y=newY;};
-        void setZ(GLdouble newZ){y=newZ;};
+        void setZ(GLdouble newZ){y=newZ;}; 
         
         void normaliza(){
            GLdouble modulo = sqrt (pow (x,2) +  pow(y, 2) + pow (z,2)  );
-           GLdouble componenteX = x / modulo;
-           GLdouble componenteY = y / modulo;
-           GLdouble componenteZ = z / modulo;
-           x = componenteX; y = componenteY; z = componenteZ;
+           if(modulo != 0){
+                GLdouble componenteX = x / modulo;
+                GLdouble componenteY = y / modulo;
+                GLdouble componenteZ = z / modulo;
+                x = componenteX; y = componenteY; z = componenteZ;
+           }
         }
-
 
         PV3D* clona(){
             return new PV3D(x, y, z);
@@ -59,16 +60,16 @@ class PV3D
             // | xa ya za | = i*ya*zb + j*za*xb + yb*xa*k - k*ya*xb - za*yb*i - xa*j*zb
             // | xb yb zb |
 
-	// por componentes: 
-	// i*ya*zb - i*za*yb
-	// j*za*xb - j*xa*zb
-	// k*yb*xa - k*ya*xb
+        	// por componentes: 
+        	// i*ya*zb - i*za*yb
+        	// j*za*xb - j*xa*zb
+        	// k*yb*xa - k*ya*xb
 
-        GLdouble componenteX = y * v->getZ() + z * v->getY();
-        GLdouble componenteY = z * v->getX() + x * v->getZ();
-        GLdouble componenteZ = x * v->getY() + y * v->getX();
+            GLdouble componenteX = y * v->getZ() + z * v->getY();
+            GLdouble componenteY = z * v->getX() + x * v->getZ();
+            GLdouble componenteZ = x * v->getY() + y * v->getX();
 
-        return new PV3D(componenteX, componenteY, componenteZ);
+            return new PV3D(componenteX, componenteY, componenteZ);
         }
 };
 
