@@ -21,7 +21,10 @@ class Cara
         VerticeNormal** arrayVN;
    public:
         Cara();
-        Cara(int numV, VerticeNormal** vn){ numVertices = numV; arrayVN = vn;}
+        Cara(int numV, VerticeNormal** vn){
+            numVertices = numV;
+            arrayVN = vn;
+        }
         ~Cara(){                                                                                       
             for(int i = 0; i < numVertices; i++) delete arrayVN[i];
             delete[] arrayVN;
@@ -29,8 +32,9 @@ class Cara
         }
         int getNumVertices(){ return numVertices; }
         VerticeNormal** getArrayVN(){ return arrayVN; }
-        int getIndiceNormal(int k){ return arrayVN[k]->getVerticeVertice(); }
-        int getIndiceVertice(int k){ return arrayVN[k]->getVerticeNormal(); }
+        int getIndiceNormal(int k){ return arrayVN[k]->getVerticeNormal(); }
+        int getIndiceVertice(int k){ return arrayVN[k]->getVerticeVertice(); }
+       
 };
 
 #endif

@@ -182,25 +182,20 @@ void __fastcall TGLForm3D::FormDestroy(TObject *Sender) {
 
 
 void TGLForm3D::crearObjetosEscena() {
-    esfera=gluNewQuadric();
+    esfera = gluNewQuadric();
 
-    // Creamos una malla
-
-    int numVertices = 4;
+// Creamos una malla
     
+    // Creamos los vertices
+    int numVertices = 4;
+
     PV3D** vertice = new PV3D*[numVertices];
     vertice[0] = new PV3D(0,0,0);
     vertice[1] = new PV3D(1,0,0);
     vertice[2] = new PV3D(0,1,0);
     vertice[3] = new PV3D(0,0,1);
 
-    int numNormales = 4;
-
-    PV3D** normal = new PV3D*[numNormales];
-    normal[0] = new PV3D(0.577,0.577,0.577);
-    normal[1] = new PV3D(0,0,-1);
-    normal[2] = new PV3D(-1,0,0);
-    normal[3] = new PV3D(0,-1,0);
+    // Creamos las caras
 
     int numVerticeNormal = 3;
 
@@ -227,12 +222,20 @@ void TGLForm3D::crearObjetosEscena() {
     int numCaras = 4;
 
     Cara** cara = new Cara*[numCaras];
+
     cara[0] = new Cara(3,arrayVN0);
     cara[1] = new Cara(3,arrayVN1);
     cara[2] = new Cara(3,arrayVN2);
     cara[3] = new Cara(3,arrayVN3);
 
-    malla = new Malla(numVertices, vertice, numNormales, normal, numCaras, cara);
+    //Creamos la malla
+
+    int numNormales = 4;
+
+    malla = new Malla(numVertices, vertice, numNormales, new PV3D*[numNormales], numCaras, cara);
+
+    // Calculamos la normal para cada cara de la malla
+    malla->RellenaVectorNormalPorNewell();
 
 // Fin crear malla
 

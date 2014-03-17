@@ -68,7 +68,6 @@ class Malla
 					normalZ = normal[iN]->getZ();
 
 					glNormal3d(normalX,normalY,normalZ);
-					//glNormal3f(normal[iN]->getX(),normal[i]->getY(),normal[iN]->getZ());
 					
 					//Si hubiera coordenadas de textura, aqui se suministrarian
 					//las coordenadas de textura del vertice j con glTexCoor2f(...);
@@ -78,31 +77,38 @@ class Malla
 					verticeZ = vertice[iV]->getZ();
 
 					glVertex3d(verticeX,verticeY,verticeZ);
-					//glVertex3f(vertice[iV]->getX(),vertice[iV]->getY(),vertice[iV]->getZ());
 				}
 				glEnd();
 			}
 	    }// Dibuja
 
-		PV3D* CalculoVectorNormalPorNewell(Cara* c){
-
-			GLdouble x = 0; GLdouble y = 0; GLdouble z = 0;
+		void RellenaVectorNormalPorNewell(){
+			
+			Cara* c; GLdouble x; GLdouble y; GLdouble z;
 			PV3D* vertActual; PV3D* vertSiguiente;
 
-			for(int i = 0; i < c->getNumVertices(); i++){
-				vertActual = vertice[c->getIndiceVertice(i)];
-				vertSiguiente = vertice[c->getIndiceVertice((i+1) % c->getNumVertices())];
-				x += (vertActual->getY() - vertSiguiente->getY()) * (vertActual->getZ() + vertSiguiente->getZ());
-				y += (vertActual->getZ() - vertSiguiente->getZ()) * (vertActual->getX() + vertSiguiente->getX());
-				z += (vertActual->getX() - vertSiguiente->getX()) * (vertActual->getY() + vertSiguiente->getY());
+			for(int pos = 0; pos < numCaras; pos++){
 
+				c = cara[pos];
+				x = 0; y = 0; z = 0;
+
+				for(int i = 0; i < c->getNumVertices(); i++){
+
+					vertActual = vertice[c->getIndiceVertice(i)];
+					vertSiguiente = vertice[c->getIndiceVertice((i+1) % c->getNumVertices())];
+					x += (vertActual->getY() - vertSiguiente->getY()) * (vertActual->getZ() + vertSiguiente->getZ());
+					y += (vertActual->getZ() - vertSiguiente->getZ()) * (vertActual->getX() + vertSiguiente->getX());
+					z += (vertActual->getX() - vertSiguiente->getX()) * (vertActual->getY() + vertSiguiente->getY());
+
+				}
+
+				PV3D* n = new PV3D(x,y,z);
+				n->normaliza();
+				normal[pos] = n;
 			}
 
-			PV3D* n = new PV3D(x,y,z);
-			n->normaliza();
-			return n;
-
 		}// CalculoVectorNormalPorNewell
+		
 };
 
 #endif
