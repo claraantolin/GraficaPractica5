@@ -9,6 +9,11 @@
 #include <gl\gl.h>
 #include <gl\glu.h>
 
+#include "Malla.h"
+#include "VerticeNormal.h"
+#include "PV3D.h"
+#include "Cara.h"
+
 //---------------------------------------------------------------------------
 class TGLForm3D : public TForm
 {
@@ -24,6 +29,7 @@ private:        //User declarations
     GLfloat eyeX, eyeY, eyeZ, lookX, lookY, lookZ, upX, upY, upZ; //Cámara
     GLdouble RatioViewPort, xLeft, xRight, yBot, yTop, N, F;  //Volumen de vista
     GLUquadricObj* esfera;  //Esfera inicial de la escena
+    Malla* malla;
     
     void __fastcall SetPixelFormatDescriptor();
     void __fastcall GLScene();

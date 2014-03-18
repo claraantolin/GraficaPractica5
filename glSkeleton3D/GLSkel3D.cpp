@@ -3,19 +3,13 @@
 #pragma hdrstop
 
 #include "GLSkel3D.h"
-#include "Malla.h"
-#include "VerticeNormal.h"
-#include "PV3D.h"
-#include "Cara.h"
-
+#define PI 3.14159265
 
 //---------------------------------------------------------------------------
 
 #pragma package(smart_init)
 #pragma resource "*.dfm"
 TGLForm3D *GLForm3D;
-
-Malla* malla;
 
 //---------------------------------------------------------------------------
 
@@ -150,6 +144,24 @@ void __fastcall TGLForm3D::GLScene() {
         glVertex3d(0.0, 0.0, 10.0);
     glEnd();
 
+    glColor4d(0.0, 0.0, 0, 1.0);
+    glBegin(GL_POINTS);
+    for(int t=0; t<1000; t++){
+       //glVertex3d(3*cos(t), 2 * cos(1.5*t), 3*sin(t));
+       glVertex3d(7*cos(t), 0, 7*sin(t));
+
+    }
+    glEnd();
+
+    glColor4d(0,0,0, 1.0);
+    glBegin(GL_LINE_LOOP);
+        double inc=(2*PI/7);
+        for(int i=0; i<7; i++)
+                glVertex3d(3*cos(2*PI-i*inc) , 3*sin(2*PI-i*inc),0) ;
+
+
+    glEnd();
+
     //Dibujo de la esfera blanca
     /*glColor3d(1.0, 1.0, 1.0);
     gluQuadricDrawStyle(esfera, GLU_FILL);
@@ -184,7 +196,7 @@ void __fastcall TGLForm3D::FormDestroy(TObject *Sender) {
 void TGLForm3D::crearObjetosEscena() {
     esfera = gluNewQuadric();
 
-// Creamos una malla
+    // Creamos una malla
     
     // Creamos los vertices
     int numVertices = 4;

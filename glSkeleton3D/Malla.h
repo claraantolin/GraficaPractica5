@@ -56,7 +56,8 @@ class Malla
 			for (int i = 0; i < numCaras; i++) {
 				glColor3d(0,0,0);
 				glLineWidth(1.0);
-				glBegin(GL_POLYGON); //o glBegin(GL_LINE_LOOP);
+				//glBegin(GL_POLYGON);
+                                glBegin(GL_LINE_LOOP);
 
 				for (int j = 0; j < cara[i]-> getNumVertices(); j++) {
 
