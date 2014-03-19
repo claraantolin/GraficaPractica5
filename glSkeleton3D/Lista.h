@@ -16,7 +16,7 @@ using namespace std;
 
 template<class T> class Lista;
 
-   template<class T>
+template<class T>
 class Nodo{
 
         friend class Lista<T>;
@@ -31,8 +31,7 @@ class Nodo{
 
                 ~Nodo(){delete info;info=NULL;};
 
-                };
-
+};
 
 template <class T>
 

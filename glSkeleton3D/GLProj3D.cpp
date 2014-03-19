@@ -9,7 +9,6 @@ USEUNIT("Malla.cpp");
 USEUNIT("PV3D.cpp");
 USEUNIT("VerticeNormal.cpp");
 USEUNIT("Lista.cpp");
-USEUNIT("Nodo.cpp");
 //---------------------------------------------------------------------------
 WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
