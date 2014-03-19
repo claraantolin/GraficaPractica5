@@ -20,20 +20,41 @@ class PV3D
         GLdouble x;
         GLdouble y;
         GLdouble z;
-
+        GLdouble w; // 0 = punto, 1 = vector
         int pv;
 
    public:
-        PV3D();
-        PV3D(GLdouble newX, GLdouble newY, GLdouble newZ){ x=newX; y=newY; z = newZ; };
-        ~PV3D(){ x=0 ; y=0; x=0;};
+        PV3D(){x=0; y=0; z = 0; w = 0;};
+        PV3D(GLdouble newX, GLdouble newY, GLdouble newZ){ x=newX; y=newY; z = newZ; w = 0;}
+        PV3D(GLdouble newX, GLdouble newY, GLdouble newZ, GLdouble newW){ x=newX; y=newY; z = newZ; w = newW;};
+        ~PV3D(){ x=0 ; y=0; x=0; w = 0;};
         GLdouble getX(){return x;};
         GLdouble getY(){return y;};
         GLdouble getZ(){return z;};
-        void setCoor(GLdouble newX, GLdouble newY, GLdouble newZ){x=newX; y=newY; z=newZ;};
+        GLdouble getW(){return w;};
+        GLdouble getCoord(int pos){
+            switch (pos){
+                case 0: return x;
+                case 1: return y;
+                case 2: return z;
+                default: return w;
+            }
+        }
+
+        void setCoord(int pos, GLdouble valor){
+            switch (pos){
+                case 0: x = valor; break;
+                case 1: y = valor; break;
+                case 2: z = valor; break;
+                default: w = valor; break;
+            }
+        }
+
+        void setCoor(GLdouble newX, GLdouble newY, GLdouble newZ, GLdouble newW){x=newX; y=newY; z=newZ; w=newW;};
         void setX(GLdouble newX){x=newX;};
         void setY(GLdouble newY){y=newY;};
         void setZ(GLdouble newZ){y=newZ;}; 
+        void setW(GLdouble neww){w=neww;}; 
         
         void normaliza(){
            GLdouble modulo = sqrt (pow (x,2) +  pow(y, 2) + pow (z,2)  );
@@ -46,7 +67,7 @@ class PV3D
         }
 
         PV3D* clona(){
-            return new PV3D(x, y, z);
+            return new PV3D(x, y, z, w);
         }
 
 
@@ -69,7 +90,7 @@ class PV3D
             GLdouble componenteY = z * v->getX() + x * v->getZ();
             GLdouble componenteZ = x * v->getY() + y * v->getX();
 
-            return new PV3D(componenteX, componenteY, componenteZ);
+            return new PV3D(componenteX, componenteY, componenteZ, 1);
         }
 };
 

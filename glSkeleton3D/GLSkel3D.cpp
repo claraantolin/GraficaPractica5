@@ -144,23 +144,37 @@ void __fastcall TGLForm3D::GLScene() {
         glVertex3d(0.0, 0.0, 10.0);
     glEnd();
 
+
+    glColor4d(0,0,0, 1.0);
+    glBegin(GL_LINE_LOOP);
+        double inc=(2*PI/7);
+        for(int i=0; i<7; i++){
+            poligono[i]->setX(3*cos(2*PI-i*inc));
+            poligono[i]->setY(3*sin(2*PI-i*inc));
+            poligono[i]->setZ(0);
+            glVertex3d(3*cos(2*PI-i*inc) , 3*sin(2*PI-i*inc),0) ;
+        }
+    glEnd();
+
     glColor4d(0.0, 0.0, 0, 1.0);
     glBegin(GL_POINTS);
     for(int t=0; t<1000; t++){
        //glVertex3d(3*cos(t), 2 * cos(1.5*t), 3*sin(t));
        glVertex3d(7*cos(t), 0, 7*sin(t));
-
     }
     glEnd();
 
-    glColor4d(0,0,0, 1.0);
+     glColor4d(0,0,0, 1.0);
     glBegin(GL_LINE_LOOP);
-        double inc=(2*PI/7);
-        for(int i=0; i<7; i++)
-                glVertex3d(3*cos(2*PI-i*inc) , 3*sin(2*PI-i*inc),0) ;
-
-
+        for(int i=0; i<7; i++){
+            GLfloat** m;
+            m = devuelveM(1.0, 7.0);
+            PV3D* p = multiplicaMatrices(m,poligono[i]);
+             glVertex3d(p->getX() ,p->getY(),p->getZ()) ;
+        }
     glEnd();
+
+
 
     //Dibujo de la esfera blanca
     /*glColor3d(1.0, 1.0, 1.0);
@@ -250,6 +264,8 @@ void TGLForm3D::crearObjetosEscena() {
     malla->RellenaVectorNormalPorNewell();
 
 // Fin crear malla
+    poligono = new PV3D*[7];
+    for(int i=0; i<7; i++) poligono[i] = new PV3D();
 
 }
 
@@ -259,5 +275,50 @@ void TGLForm3D::crearObjetosEscena() {
 void TGLForm3D::liberarObjetosEscena() {
     gluDeleteQuadric(esfera);
     delete malla;
+    for(int i = 0; i < 7; i++) delete poligono[i];
+    delete[] poligono;
 }
 
+//---------------------------------------------------------------------------
+
+GLfloat** TGLForm3D::devuelveM(GLfloat t, GLfloat r){
+
+    GLfloat** m = new GLfloat*[4];
+    
+    m[0][0] = -1 * cos(t);
+    m[0][1] = 0;
+    m[0][2] = -1 * sin(t);
+    m[0][3] = r * cos(t);
+
+    m[1][0] = 0;
+    m[1][1] = -1;
+    m[1][2] = 0;
+    m[1][3] = 0;
+
+    m[2][0] = sin(t);
+    m[2][1] = 0,
+    m[2][2] = cos(t);
+    m[2][3] = r * sin(t);
+
+    m[3][0] = 0;
+    m[3][1] = 0;
+    m[3][2] = 0;
+    m[3][3] = 1;
+
+    return m;
+}
+
+PV3D* TGLForm3D::multiplicaMatrices(GLfloat** m, PV3D* p){
+    PV3D* sol = new PV3D();
+    GLfloat num = 0;
+
+    for(int f = 0; f < 4; f++){
+        for(int c = 0; c < 4; c++)
+            num += m[f][c] * p->getCoord(c);
+        
+        p->setCoord(f, num);
+        num = 0;
+    }
+
+    return sol;
+}
