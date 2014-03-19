@@ -164,17 +164,20 @@ void __fastcall TGLForm3D::GLScene() {
     }
     glEnd();
 
-     glColor4d(0,0,0, 1.0);
+    glColor4d(0,0,0, 1.0);
     glBegin(GL_LINE_LOOP);
         for(int i=0; i<7; i++){
             GLfloat** m;
             m = devuelveM(1.0, 7.0);
             PV3D* p = multiplicaMatrices(m,poligono[i]);
-             glVertex3d(p->getX() ,p->getY(),p->getZ()) ;
+            glVertex3d(p->getX() ,p->getY(),p->getZ()) ;
+            
+            for(int j = 0; j < 4; j++) delete[] m[j]; 
+            delete[] m;
+
+            delete p; 
         }
     glEnd();
-
-
 
     //Dibujo de la esfera blanca
     /*glColor3d(1.0, 1.0, 1.0);
@@ -210,7 +213,7 @@ void __fastcall TGLForm3D::FormDestroy(TObject *Sender) {
 void TGLForm3D::crearObjetosEscena() {
     esfera = gluNewQuadric();
 
-    // Creamos una malla
+// Creamos una malla
     
     // Creamos los vertices
     int numVertices = 4;
@@ -264,6 +267,7 @@ void TGLForm3D::crearObjetosEscena() {
     malla->RellenaVectorNormalPorNewell();
 
 // Fin crear malla
+
     poligono = new PV3D*[7];
     for(int i=0; i<7; i++) poligono[i] = new PV3D();
 
@@ -284,7 +288,10 @@ void TGLForm3D::liberarObjetosEscena() {
 GLfloat** TGLForm3D::devuelveM(GLfloat t, GLfloat r){
 
     GLfloat** m = new GLfloat*[4];
-    
+    for (int i = 0; i < 4; ++i)
+        m[i] = new GLfloat[4];
+
+
     m[0][0] = -1 * cos(t);
     m[0][1] = 0;
     m[0][2] = -1 * sin(t);
@@ -295,11 +302,13 @@ GLfloat** TGLForm3D::devuelveM(GLfloat t, GLfloat r){
     m[1][2] = 0;
     m[1][3] = 0;
 
+    //m[2] = new GLfloat*[4];
     m[2][0] = sin(t);
     m[2][1] = 0,
     m[2][2] = cos(t);
     m[2][3] = r * sin(t);
 
+    //m[3] = new GLfloat*[4];
     m[3][0] = 0;
     m[3][1] = 0;
     m[3][2] = 0;
