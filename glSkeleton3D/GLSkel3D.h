@@ -13,6 +13,7 @@
 #include "VerticeNormal.h"
 #include "PV3D.h"
 #include "Cara.h"
+#include "Lista.h"
 
 //---------------------------------------------------------------------------
 class TGLForm3D : public TForm
@@ -31,13 +32,14 @@ private:        //User declarations
     GLUquadricObj* esfera;  //Esfera inicial de la escena
     Malla* malla;
     PV3D** poligono;
-    
+
     void __fastcall SetPixelFormatDescriptor();
     void __fastcall GLScene();
     void crearObjetosEscena();
     void liberarObjetosEscena();
     PV3D* multiplicaMatrices(GLfloat** m, PV3D* p);
     GLfloat** devuelveM(GLfloat t, GLfloat r);
+    Lista<PV3D*>* hazMatriz(GLfloat t, GLfloat r);
 
 public:		//User declarations
     __fastcall TGLForm3D(TComponent* Owner);

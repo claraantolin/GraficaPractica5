@@ -179,12 +179,17 @@ void __fastcall TGLForm3D::GLScene() {
         }
     glEnd();
 
+    Lista<PV3D*>* matriz = hazMatriz(1,7);
+    delete matriz;
+    
+    
+
     //Dibujo de la esfera blanca
     /*glColor3d(1.0, 1.0, 1.0);
     gluQuadricDrawStyle(esfera, GLU_FILL);
     gluSphere(esfera, 3, 30, 30); */
 
-    malla->dibuja();
+    //malla->dibuja();
 
     //glFlush();
     SwapBuffers(hdc);
@@ -281,9 +286,25 @@ void TGLForm3D::liberarObjetosEscena() {
     delete malla;
     for(int i = 0; i < 7; i++) delete poligono[i];
     delete[] poligono;
+
 }
 
 //---------------------------------------------------------------------------
+
+Lista<PV3D*>* TGLForm3D::hazMatriz(GLfloat t, GLfloat r){
+
+        Lista<PV3D*>* matriz = new Lista<PV3D*>();
+
+        PV3D* n = new PV3D(-1 * cos(t),0, sin(t), 0);
+        PV3D* b = new PV3D(0,-1, 0, 0);
+        PV3D* tM = new PV3D(-1 * sin(t),0, cos(t), 0);
+        PV3D* c = new PV3D(r * cos(t),0, r*sin(t), 1);
+
+        matriz->ponElem(n); matriz->ponElem(b); matriz->ponElem(tM); matriz->ponElem(c); 
+
+        return matriz;
+}
+
 
 GLfloat** TGLForm3D::devuelveM(GLfloat t, GLfloat r){
 

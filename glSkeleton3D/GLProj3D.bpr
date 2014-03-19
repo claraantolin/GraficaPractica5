@@ -4,7 +4,8 @@
   <MACROS>
     <VERSION value="BCB.05.03"/>
     <PROJECT value="GLProj3D.exe"/>
-    <OBJFILES value="GLProj3D.obj GLSkel3D.obj Cara.obj Malla.obj PV3D.obj VerticeNormal.obj"/>
+    <OBJFILES value="GLProj3D.obj GLSkel3D.obj Cara.obj Malla.obj PV3D.obj VerticeNormal.obj 
+      Lista.obj Nodo.obj"/>
     <RESFILES value="GLProj3D.res"/>
     <DEFFILE value=""/>
     <RESDEPEN value="$(RESFILES) GLSkel3D.dfm"/>
