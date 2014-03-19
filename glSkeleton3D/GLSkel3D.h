@@ -31,13 +31,12 @@ private:        //User declarations
     GLdouble RatioViewPort, xLeft, xRight, yBot, yTop, N, F;  //Volumen de vista
     GLUquadricObj* esfera;  //Esfera inicial de la escena
     Malla* malla;
-    PV3D** poligono;
 
     void __fastcall SetPixelFormatDescriptor();
     void __fastcall GLScene();
     void crearObjetosEscena();
     void liberarObjetosEscena();
-    PV3D* multiplicaMatrices(GLfloat** m, PV3D* p);
+    PV3D* multiplicaMatrices(Lista<PV3D*>* m, PV3D* p);
     GLfloat** devuelveM(GLfloat t, GLfloat r);
     Lista<PV3D*>* hazMatriz(GLfloat t, GLfloat r);
 

@@ -144,15 +144,18 @@ void __fastcall TGLForm3D::GLScene() {
         glVertex3d(0.0, 0.0, 10.0);
     glEnd();
 
+    Lista<PV3D*>* matriz = hazMatriz(1,7);
+    Lista<PV3D*>* poligono = new Lista<PV3D*>();
 
-    glColor4d(0,0,0, 1.0);
+    glColor4d(0,3,0, 1.0);
     glBegin(GL_LINE_LOOP);
         double inc=(2*PI/7);
         for(int i=0; i<7; i++){
-            poligono[i]->setX(3*cos(2*PI-i*inc));
-            poligono[i]->setY(3*sin(2*PI-i*inc));
-            poligono[i]->setZ(0);
+            PV3D* nodo = new PV3D(3*cos(2*PI-i*inc) , 3*sin(2*PI-i*inc),0);
+            poligono->ponElem(nodo);
             glVertex3d(3*cos(2*PI-i*inc) , 3*sin(2*PI-i*inc),0) ;
+
+
         }
     glEnd();
 
@@ -164,23 +167,18 @@ void __fastcall TGLForm3D::GLScene() {
     }
     glEnd();
 
-    glColor4d(0,0,0, 1.0);
+
+
+    glColor4d(1,0,1, 1.0);
     glBegin(GL_LINE_LOOP);
         for(int i=0; i<7; i++){
-            GLfloat** m;
-            m = devuelveM(1.0, 7.0);
-            PV3D* p = multiplicaMatrices(m,poligono[i]);
-            glVertex3d(p->getX() ,p->getY(),p->getZ()) ;
-            
-            for(int j = 0; j < 4; j++) delete[] m[j]; 
-            delete[] m;
-
-            delete p; 
+            PV3D* res = multiplicaMatrices(matriz, poligono->iesimo(i));
+            glVertex3d(res->getX(), res->getY(), res->getZ());
+            delete res;
         }
     glEnd();
 
-    Lista<PV3D*>* matriz = hazMatriz(1,7);
-    delete matriz;
+    delete matriz; delete poligono;
     
     
 
@@ -273,8 +271,6 @@ void TGLForm3D::crearObjetosEscena() {
 
 // Fin crear malla
 
-    poligono = new PV3D*[7];
-    for(int i=0; i<7; i++) poligono[i] = new PV3D();
 
 }
 
@@ -284,9 +280,6 @@ void TGLForm3D::crearObjetosEscena() {
 void TGLForm3D::liberarObjetosEscena() {
     gluDeleteQuadric(esfera);
     delete malla;
-    for(int i = 0; i < 7; i++) delete poligono[i];
-    delete[] poligono;
-
 }
 
 //---------------------------------------------------------------------------
@@ -305,50 +298,22 @@ Lista<PV3D*>* TGLForm3D::hazMatriz(GLfloat t, GLfloat r){
         return matriz;
 }
 
-
-GLfloat** TGLForm3D::devuelveM(GLfloat t, GLfloat r){
-
-    GLfloat** m = new GLfloat*[4];
-    for (int i = 0; i < 4; ++i)
-        m[i] = new GLfloat[4];
+PV3D* TGLForm3D::multiplicaMatrices(Lista<PV3D*>* m, PV3D* p){
 
 
-    m[0][0] = -1 * cos(t);
-    m[0][1] = 0;
-    m[0][2] = -1 * sin(t);
-    m[0][3] = r * cos(t);
+        PV3D* n = m->iesimo(0);
+        GLfloat xPrima = n->getX() * p->getX() + n->getY() * p->getY() + n->getZ() * p->getZ() + n->getW() * p->getW();
 
-    m[1][0] = 0;
-    m[1][1] = -1;
-    m[1][2] = 0;
-    m[1][3] = 0;
+        PV3D* b = m->iesimo(1);
+        GLfloat yPrima = b->getX() * p->getX() + b->getY() * p->getY() + b->getZ() * p->getZ() + b->getW() * p->getW();
 
-    //m[2] = new GLfloat*[4];
-    m[2][0] = sin(t);
-    m[2][1] = 0,
-    m[2][2] = cos(t);
-    m[2][3] = r * sin(t);
+        PV3D* t = m->iesimo(2);
+        GLfloat zPrima = t->getX() * p->getX() + t->getY() * p->getY() + t->getZ() * p->getZ() + t->getW() * p->getW();
 
-    //m[3] = new GLfloat*[4];
-    m[3][0] = 0;
-    m[3][1] = 0;
-    m[3][2] = 0;
-    m[3][3] = 1;
+        PV3D* c = m->iesimo(3);
+        GLfloat wPrima = c->getX() * p->getX() + c->getY() * p->getY() + c->getZ() * p->getZ() + c->getW() * p->getW();
 
-    return m;
+        return new PV3D(xPrima, yPrima, zPrima, wPrima);
+
 }
 
-PV3D* TGLForm3D::multiplicaMatrices(GLfloat** m, PV3D* p){
-    PV3D* sol = new PV3D();
-    GLfloat num = 0;
-
-    for(int f = 0; f < 4; f++){
-        for(int c = 0; c < 4; c++)
-            num += m[f][c] * p->getCoord(c);
-        
-        p->setCoord(f, num);
-        num = 0;
-    }
-
-    return sol;
-}
