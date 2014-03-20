@@ -144,18 +144,23 @@ void __fastcall TGLForm3D::GLScene() {
         glVertex3d(0.0, 0.0, 10.0);
     glEnd();
 
-    Lista<PV3D*>* matriz = hazMatriz(1,7);
+
+    int radio = 3;
+    int valor = 0;
+    //for(int valor=0; valor<15; valor++){
+    float t = (2* M_PI * valor) / 15.0;
+
+
+    Lista<PV3D*>* matriz = hazMatriz(t,7);  
     Lista<PV3D*>* poligono = new Lista<PV3D*>();
 
     glColor4d(0,3,0, 1.0);
     glBegin(GL_LINE_LOOP);
-        double inc=(2*PI/7);
-        for(int i=0; i<7; i++){
-            PV3D* nodo = new PV3D(3*cos(2*PI-i*inc) , 3*sin(2*PI-i*inc),0);
+        double inc=(2*PI/3);
+        for(int i=0; i<3; i++){
+            PV3D* nodo = new PV3D(radio*cos(2*PI-i*inc) , radio*sin(2*PI-i*inc),1);
             poligono->ponElem(nodo);
-            glVertex3d(3*cos(2*PI-i*inc) , 3*sin(2*PI-i*inc),0) ;
-
-
+            glVertex3d(radio*cos(2*PI-i*inc) , radio*sin(2*PI-i*inc),0) ;
         }
     glEnd();
 
@@ -171,7 +176,7 @@ void __fastcall TGLForm3D::GLScene() {
 
     glColor4d(1,0,1, 1.0);
     glBegin(GL_LINE_LOOP);
-        for(int i=0; i<7; i++){
+        for(int i=0; i<3; i++){
             PV3D* res = multiplicaMatrices(matriz, poligono->iesimo(i));
             glVertex3d(res->getX(), res->getY(), res->getZ());
             delete res;
@@ -179,8 +184,7 @@ void __fastcall TGLForm3D::GLScene() {
     glEnd();
 
     delete matriz; delete poligono;
-    
-    
+    //}
 
     //Dibujo de la esfera blanca
     /*glColor3d(1.0, 1.0, 1.0);
@@ -288,10 +292,15 @@ Lista<PV3D*>* TGLForm3D::hazMatriz(GLfloat t, GLfloat r){
 
         Lista<PV3D*>* matriz = new Lista<PV3D*>();
 
-        PV3D* n = new PV3D(-1 * cos(t),0, sin(t), 0);
+        //PV3D* n = new PV3D(-1 * cos(t),0, sin(t), 0);
+        //PV3D* b = new PV3D(0,-1, 0, 0);
+        //PV3D* tM = new PV3D(-1 * sin(t),0, cos(t), 0);
+        //PV3D* c = new PV3D(r * cos(t),0, r*sin(t), 1);
+
+        PV3D* n = new PV3D(-1 * cos(t),0, -sin(t), 20* cos(t));
         PV3D* b = new PV3D(0,-1, 0, 0);
-        PV3D* tM = new PV3D(-1 * sin(t),0, cos(t), 0);
-        PV3D* c = new PV3D(r * cos(t),0, r*sin(t), 1);
+        PV3D* tM = new PV3D(-sin(t),0, cos(t),  20*sin(t));
+        PV3D* c = new PV3D(0,0,0, 1);
 
         matriz->ponElem(n); matriz->ponElem(b); matriz->ponElem(tM); matriz->ponElem(c); 
 
