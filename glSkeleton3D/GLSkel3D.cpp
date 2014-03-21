@@ -130,7 +130,7 @@ void __fastcall TGLForm3D::GLScene() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     //Dibujo de los ejes
-    glBegin(GL_LINES);
+    /*glBegin(GL_LINES);
         glColor4d(1.0, 0.0, 0.0, 1.0);
         glVertex3d(0.0, 0.0, 0.0);
         glVertex3d(10.0, 0.0, 0.0);
@@ -142,49 +142,80 @@ void __fastcall TGLForm3D::GLScene() {
         glColor4d(0.0, 0.0, 1.0, 1.0);
         glVertex3d(0.0, 0.0, 0.0);
         glVertex3d(0.0, 0.0, 10.0);
-    glEnd();
+    glEnd();*/
 
 
     int radio = 3;
     int valor = 0;
+
+
+    Lista<Lista<PV3D*>*>* poligonos = new Lista<Lista<PV3D*>*>();
+
     for(int valor=0; valor<15; valor++){
-    float t = (2* M_PI * valor) / 15.0;
+        float t = (2* M_PI * valor) / 15.0;
 
+        Lista<PV3D*>* matriz = hazMatriz(t,7);  
+        Lista<PV3D*>* poligono = new Lista<PV3D*>();
 
-    Lista<PV3D*>* matriz = hazMatriz(t,7);  
-    Lista<PV3D*>* poligono = new Lista<PV3D*>();
+        glColor4d(0,3,0, 1.0);
+        glBegin(GL_LINE_LOOP);
+            double inc=(2*PI/3);
+            for(int i=0; i<3; i++){
+                PV3D* nodo = new PV3D(radio*cos(2*PI-i*inc) , radio*sin(2*PI-i*inc),0,1);
+                poligono->ponElem(nodo);
+                //glVertex3d(radio*cos(2*PI-i*inc) , radio*sin(2*PI-i*inc),0) ;
+            }
+        glEnd();
 
-    glColor4d(0,3,0, 1.0);
-    glBegin(GL_LINE_LOOP);
-        double inc=(2*PI/3);
-        for(int i=0; i<3; i++){
-            PV3D* nodo = new PV3D(radio*cos(2*PI-i*inc) , radio*sin(2*PI-i*inc),0,1);
-            poligono->ponElem(nodo);
-            glVertex3d(radio*cos(2*PI-i*inc) , radio*sin(2*PI-i*inc),0) ;
+        glColor4d(0.0, 0.0, 0, 1.0);
+        glBegin(GL_POINTS);
+        for(int t=0; t<1000; t++){
+           //glVertex3d(3*cos(t), 2 * cos(1.5*t), 3*sin(t));
+           glVertex3d(7*cos(t), 0, 7*sin(t));
         }
-    glEnd();
+        glEnd();
 
-    glColor4d(0.0, 0.0, 0, 1.0);
-    glBegin(GL_POINTS);
-    for(int t=0; t<1000; t++){
-       //glVertex3d(3*cos(t), 2 * cos(1.5*t), 3*sin(t));
-       glVertex3d(7*cos(t), 0, 7*sin(t));
+        Lista<PV3D*>* poligonoAux = new Lista<PV3D*>();
+        glColor4d(1,0,1, 1.0);
+        glBegin(GL_LINE_LOOP);
+            for(int i=0; i<3; i++){
+                PV3D* res = multiplicaMatrices(matriz, poligono->iesimo(i));
+                poligonoAux->ponElem(res);
+                
+                glVertex3d(res->getX(), res->getY(), res->getZ());
+             
+            }
+        glEnd();
+
+        poligonos->ponElem(poligonoAux);
+
+        delete matriz; delete poligono;
     }
-    glEnd();
 
+    Lista<PV3D*>* poligono1 = poligonos->iesimo(0);
+    Lista<PV3D*>* poligono2 = poligonos->iesimo(1);
+    
+    int n = 3;
+    for(int i = 0 ; i < 2; i++){
+        glColor4d(0,3,0, 1.0);
+        glBegin(GL_LINE_LOOP); 
+            PV3D* p1 = poligono1->iesimo(i);
+            PV3D* p3 = poligono2->iesimo(i);
+            glVertex3d(p3->getX(),p3->getY(),p3->getZ());
+            glVertex3d(p1->getX(),p1->getY(),p1->getZ());
+        glEnd();
 
+        glColor4d(0,3,0, 1.0);
+        glBegin(GL_LINES);
+            PV3D* p2 = poligono1->iesimo(i+1);
+            PV3D* p4 = poligono2->iesimo(i+1);
+            glVertex3d(p2->getX(),p2->getY(),p2->getZ());
+            glVertex3d(p4->getX(),p4->getY(),p4->getZ());
+        glEnd();
 
-    glColor4d(1,0,1, 1.0);
-    glBegin(GL_LINE_LOOP);
-        for(int i=0; i<3; i++){
-            PV3D* res = multiplicaMatrices(matriz, poligono->iesimo(i));
-            glVertex3d(res->getX(), res->getY(), res->getZ());
-            delete res;
-        }
-    glEnd();
+    }  
 
-    delete matriz; delete poligono;
-    }
+    //delete poligonos;
 
     //Dibujo de la esfera blanca
     /*glColor3d(1.0, 1.0, 1.0);
