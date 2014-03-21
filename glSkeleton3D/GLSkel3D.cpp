@@ -144,7 +144,7 @@ void __fastcall TGLForm3D::GLScene() {
         glVertex3d(0.0, 0.0, 10.0);
     glEnd();*/
 
-
+    /*
     int radio = 1;
     int valor = 0;
 
@@ -220,7 +220,7 @@ void __fastcall TGLForm3D::GLScene() {
     }
 
     //delete poligonos;
-
+    */
     //Dibujo de la esfera blanca
     /*glColor3d(1.0, 1.0, 1.0);
     gluQuadricDrawStyle(esfera, GLU_FILL);
@@ -303,10 +303,10 @@ void TGLForm3D::crearObjetosEscena() {
 
     int numNormales = 4;
 
-    malla = new Malla(numVertices, vertice, numNormales, new PV3D*[numNormales], numCaras, cara);
+    //malla = new Malla(numVertices, vertice, numNormales, new PV3D*[numNormales], numCaras, cara);
 
     // Calculamos la normal para cada cara de la malla
-    malla->RellenaVectorNormalPorNewell();
+    //malla->RellenaVectorNormalPorNewell();
 
 // Fin crear malla
 

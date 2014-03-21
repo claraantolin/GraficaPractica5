@@ -14,19 +14,20 @@
 
 #include "PV3D.h"
 #include "Cara.h"
+#include "Lista.h"
 //---------------------------------------------------------------------------
 class Malla
 {
    private:
         int numVertices;
-        PV3D** vertice;
+        Lista<PV3D*>* vertice;
         int numNormales; //=numCaras, frecuentemente
-        PV3D** normal;
+        Lista<PV3D*>* normal;
         int numCaras;
-        Cara** cara;
+        Lista<Cara*>* cara;
    public:
    		Malla();
-        Malla(int inumV, PV3D** v, int numN, PV3D** n, int numC, Cara** c){
+        Malla(int inumV, Lista<PV3D*>* v, int numN, Lista<PV3D*>* n, int numC, Lista<Cara*>* c){
       		numVertices = inumV;
         	vertice = v;
 	     	numNormales = numN;
@@ -36,20 +37,17 @@ class Malla
         };
         ~Malla(){
         	
-        	for(int i = 0; i < numVertices; i++) delete vertice[i];
-	       	for(int i = 0; i < numNormales; i++) delete normal[i];
-	        for(int i = 0; i < numCaras; i++) delete cara[i];
+        	delete vertice;
+        	delete normal;
+        	delete cara;
 
-	        delete[] vertice;
-	    	delete[] normal;
-	    	delete[] cara;
         	numVertices = 0;
         	numNormales = 0;
         	numCaras = 0;
         };
 
         void dibuja(){
-
+/*
 			GLdouble normalX, normalY, normalZ;
 			GLdouble verticeX, verticeY, verticeZ;
 
@@ -80,11 +78,11 @@ class Malla
 					glVertex3d(verticeX,verticeY,verticeZ);
 				}
 				glEnd();
-			}
+			}*/
 	    }// Dibuja
-
+            
 		void RellenaVectorNormalPorNewell(){
-			
+			/*
 			Cara* c; GLdouble x; GLdouble y; GLdouble z;
 			PV3D* vertActual; PV3D* vertSiguiente;
 
@@ -107,7 +105,7 @@ class Malla
 				n->normaliza();
 				normal[pos] = n;
 			}
-
+                        */
 		}// CalculoVectorNormalPorNewell
 		
 };

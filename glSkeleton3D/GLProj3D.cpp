@@ -9,6 +9,7 @@ USEUNIT("Malla.cpp");
 USEUNIT("PV3D.cpp");
 USEUNIT("VerticeNormal.cpp");
 USEUNIT("Lista.cpp");
+USEUNIT("RollerCoaster.cpp");
 //---------------------------------------------------------------------------
 WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
