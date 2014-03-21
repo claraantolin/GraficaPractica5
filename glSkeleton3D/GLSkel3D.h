@@ -14,6 +14,7 @@
 #include "PV3D.h"
 #include "Cara.h"
 #include "Lista.h"
+#include "RollerCoaster.h"
 
 //---------------------------------------------------------------------------
 class TGLForm3D : public TForm
@@ -29,9 +30,11 @@ private:        //User declarations
     HGLRC hrc;
     GLfloat eyeX, eyeY, eyeZ, lookX, lookY, lookZ, upX, upY, upZ; //Cámara
     GLdouble RatioViewPort, xLeft, xRight, yBot, yTop, N, F;  //Volumen de vista
+    
     GLUquadricObj* esfera;  //Esfera inicial de la escena
+    RollerCoaster* rollerCoaster;
     Malla* malla;
-
+    
     void __fastcall SetPixelFormatDescriptor();
     void __fastcall GLScene();
     void crearObjetosEscena();

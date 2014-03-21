@@ -13,28 +13,33 @@
 #include <gl\glu.h>
 
 #include "VerticeNormal.h"
+#include "Lista.h"
 //---------------------------------------------------------------------------
 class Cara                                                                     
-{
+{                                                             
    private:
         int numVertices;
-        VerticeNormal** arrayVN;
+        Lista<VerticeNormal*>* arrayVN;
+
    public:
-        Cara();
-        Cara(int numV, VerticeNormal** vn){
+        Cara(){
+            numVertices = 0;
+            arrayVN = NULL;
+        };
+        Cara(int numV, Lista<VerticeNormal*>* vn){
             numVertices = numV;
             arrayVN = vn;
         }
-        ~Cara(){                                                                                       
-            for(int i = 0; i < numVertices; i++) delete arrayVN[i];
-            delete[] arrayVN;
+        ~Cara(){                                                   
+            delete arrayVN;
             numVertices = 0;
         }
         int getNumVertices(){ return numVertices; }
-        VerticeNormal** getArrayVN(){ return arrayVN; }
-        int getIndiceNormal(int k){ return arrayVN[k]->getVerticeNormal(); }
-        int getIndiceVertice(int k){ return arrayVN[k]->getVerticeVertice(); }
-       
+        Lista<VerticeNormal*>* getArrayVN(){ return arrayVN; }
+        int getIndiceNormal(int k){ return arrayVN->iesimo(k)->getVerticeNormal(); }
+        int getIndiceVertice(int k){ return arrayVN->iesimo(k)->getVerticeVertice(); }
+        void setNumVertices(int numV){ numVertices = numV; }
+        void setArrayVN(Lista<VerticeNormal*>* aVN){ arrayVN = aVN; }
 };
 
 #endif

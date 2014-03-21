@@ -68,7 +68,7 @@ class Lista
   //---------IESIMO--------------------
       T iesimo(int n)
       {
-         Nodo<T>* aux;
+         Nodo<T>* aux;                                                      
          aux=primero;
          while((aux!=NULL) && n>0)
          {

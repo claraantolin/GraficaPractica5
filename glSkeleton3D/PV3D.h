@@ -50,7 +50,8 @@ class PV3D
             }
         }
 
-        void setCoor(GLdouble newX, GLdouble newY, GLdouble newZ, GLdouble newW){x=newX; y=newY; z=newZ; w=newW;};
+        void set4Coor(GLdouble newX, GLdouble newY, GLdouble newZ, GLdouble newW){x=newX; y=newY; z=newZ; w=newW;};
+        void set3Coor(GLdouble newX, GLdouble newY, GLdouble newZ){x=newX; y=newY; z=newZ;}
         void setX(GLdouble newX){x=newX;};
         void setY(GLdouble newY){y=newY;};
         void setZ(GLdouble newZ){y=newZ;}; 

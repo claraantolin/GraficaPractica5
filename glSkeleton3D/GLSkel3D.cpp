@@ -3,7 +3,6 @@
 #pragma hdrstop
 
 #include "GLSkel3D.h"
-#define PI 3.14159265
 
 //---------------------------------------------------------------------------
 
@@ -167,6 +166,7 @@ void __fastcall TGLForm3D::GLScene() {
             }
         glEnd();
 
+    // CURVA
         glColor4d(0.0, 0.0, 0, 1.0);
         glBegin(GL_POINTS);
         for(int t=0; t<1000; t++){
@@ -221,12 +221,12 @@ void __fastcall TGLForm3D::GLScene() {
 
     //delete poligonos;
     */
+
+
     //Dibujo de la esfera blanca
     /*glColor3d(1.0, 1.0, 1.0);
     gluQuadricDrawStyle(esfera, GLU_FILL);
     gluSphere(esfera, 3, 30, 30); */
-
-    //malla->dibuja();
 
     //glFlush();
     SwapBuffers(hdc);
@@ -234,13 +234,11 @@ void __fastcall TGLForm3D::GLScene() {
 
 //---------------------------------------------------------------------------
 
-
 void __fastcall TGLForm3D::FormPaint(TObject *Sender) {
     GLScene();
 }
 
 //---------------------------------------------------------------------------
-
 
 void __fastcall TGLForm3D::FormDestroy(TObject *Sender) {
     liberarObjetosEscena();
@@ -251,113 +249,20 @@ void __fastcall TGLForm3D::FormDestroy(TObject *Sender) {
 
 //---------------------------------------------------------------------------
 
-
 void TGLForm3D::crearObjetosEscena() {
     esfera = gluNewQuadric();
-
-// Creamos una malla
-    
-    // Creamos los vertices
-    int numVertices = 4;
-
-    PV3D** vertice = new PV3D*[numVertices];
-    vertice[0] = new PV3D(0,0,0);
-    vertice[1] = new PV3D(1,0,0);
-    vertice[2] = new PV3D(0,1,0);
-    vertice[3] = new PV3D(0,0,1);
-
-    // Creamos las caras
-
-    int numVerticeNormal = 3;
-
-    VerticeNormal** arrayVN0 = new VerticeNormal*[numVerticeNormal];
-    arrayVN0[0] = new VerticeNormal(1,0);
-    arrayVN0[1] = new VerticeNormal(2,0);
-    arrayVN0[2] = new VerticeNormal(3,0);
-
-    VerticeNormal** arrayVN1 = new VerticeNormal*[numVerticeNormal];
-    arrayVN1[0] = new VerticeNormal(0,1);
-    arrayVN1[1] = new VerticeNormal(2,1);
-    arrayVN1[2] = new VerticeNormal(1,1);
-
-    VerticeNormal** arrayVN2 = new VerticeNormal*[numVerticeNormal];
-    arrayVN2[0] = new VerticeNormal(0,2);
-    arrayVN2[1] = new VerticeNormal(3,2);
-    arrayVN2[2] = new VerticeNormal(2,2);
-
-    VerticeNormal** arrayVN3 = new VerticeNormal*[numVerticeNormal];
-    arrayVN3[0] = new VerticeNormal(1,3);
-    arrayVN3[1] = new VerticeNormal(3,3);
-    arrayVN3[2] = new VerticeNormal(0,3);
-
-    int numCaras = 4;
-
-    Cara** cara = new Cara*[numCaras];
-
-    cara[0] = new Cara(3,arrayVN0);
-    cara[1] = new Cara(3,arrayVN1);
-    cara[2] = new Cara(3,arrayVN2);
-    cara[3] = new Cara(3,arrayVN3);
-
-    //Creamos la malla
-
-    int numNormales = 4;
-
-    //malla = new Malla(numVertices, vertice, numNormales, new PV3D*[numNormales], numCaras, cara);
-
-    // Calculamos la normal para cada cara de la malla
-    //malla->RellenaVectorNormalPorNewell();
-
-// Fin crear malla
-
+    rollerCoaster = new RollerCoaster(6,3);
 
 }
 
 //---------------------------------------------------------------------------
-
 
 void TGLForm3D::liberarObjetosEscena() {
     gluDeleteQuadric(esfera);
-    delete malla;
+    delete rollerCoaster;
 }
 
 //---------------------------------------------------------------------------
 
-Lista<PV3D*>* TGLForm3D::hazMatriz(GLfloat t, GLfloat r){
 
-        Lista<PV3D*>* matriz = new Lista<PV3D*>();
-
-        //PV3D* n = new PV3D(-1 * cos(t),0, sin(t), 0);
-        //PV3D* b = new PV3D(0,-1, 0, 0);
-        //PV3D* tM = new PV3D(-1 * sin(t),0, cos(t), 0);
-        //PV3D* c = new PV3D(r * cos(t),0, r*sin(t), 1);
-
-        PV3D* n = new PV3D(-1 * cos(t),0, -sin(t), r* cos(t));
-        PV3D* b = new PV3D(0,-1, 0, 0);
-        PV3D* tM = new PV3D(-sin(t),0, cos(t),  r*sin(t));
-        PV3D* c = new PV3D(0,0,0, 1);
-
-        matriz->ponElem(n); matriz->ponElem(b); matriz->ponElem(tM); matriz->ponElem(c); 
-
-        return matriz;
-}
-
-PV3D* TGLForm3D::multiplicaMatrices(Lista<PV3D*>* m, PV3D* p){
-
-
-        PV3D* n = m->iesimo(0);
-        GLfloat xPrima = n->getX() * p->getX() + n->getY() * p->getY() + n->getZ() * p->getZ() + n->getW() * p->getW();
-
-        PV3D* b = m->iesimo(1);
-        GLfloat yPrima = b->getX() * p->getX() + b->getY() * p->getY() + b->getZ() * p->getZ() + b->getW() * p->getW();
-
-        PV3D* t = m->iesimo(2);
-        GLfloat zPrima = t->getX() * p->getX() + t->getY() * p->getY() + t->getZ() * p->getZ() + t->getW() * p->getW();
-
-        PV3D* c = m->iesimo(3);
-        GLfloat wPrima = c->getX() * p->getX() + c->getY() * p->getY() + c->getZ() * p->getZ() + c->getW() * p->getW();
-
-        return new PV3D(xPrima, yPrima, zPrima, wPrima);
-
-}
 
