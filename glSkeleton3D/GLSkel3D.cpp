@@ -145,12 +145,12 @@ void __fastcall TGLForm3D::GLScene() {
     glEnd();*/
 
 
-    int radio = 3;
+    int radio = 1;
     int valor = 0;
 
 
     Lista<Lista<PV3D*>*>* poligonos = new Lista<Lista<PV3D*>*>();
-
+    int lados = 50;
     for(int valor=0; valor<15; valor++){
         float t = (2* M_PI * valor) / 15.0;
 
@@ -159,8 +159,8 @@ void __fastcall TGLForm3D::GLScene() {
 
         glColor4d(0,3,0, 1.0);
         glBegin(GL_LINE_LOOP);
-            double inc=(2*PI/3);
-            for(int i=0; i<3; i++){
+            double inc=(2*PI/lados);
+            for(int i=0; i<lados; i++){
                 PV3D* nodo = new PV3D(radio*cos(2*PI-i*inc) , radio*sin(2*PI-i*inc),0,1);
                 poligono->ponElem(nodo);
                 //glVertex3d(radio*cos(2*PI-i*inc) , radio*sin(2*PI-i*inc),0) ;
@@ -178,7 +178,7 @@ void __fastcall TGLForm3D::GLScene() {
         Lista<PV3D*>* poligonoAux = new Lista<PV3D*>();
         glColor4d(1,0,1, 1.0);
         glBegin(GL_LINE_LOOP);
-            for(int i=0; i<3; i++){
+            for(int i=0; i<lados; i++){
                 PV3D* res = multiplicaMatrices(matriz, poligono->iesimo(i));
                 poligonoAux->ponElem(res);
                 
@@ -192,28 +192,32 @@ void __fastcall TGLForm3D::GLScene() {
         delete matriz; delete poligono;
     }
 
-    Lista<PV3D*>* poligono1 = poligonos->iesimo(0);
-    Lista<PV3D*>* poligono2 = poligonos->iesimo(1);
-    
-    int n = 3;
-    for(int i = 0 ; i < 2; i++){
-        glColor4d(0,3,0, 1.0);
-        glBegin(GL_LINE_LOOP); 
-            PV3D* p1 = poligono1->iesimo(i);
-            PV3D* p3 = poligono2->iesimo(i);
-            glVertex3d(p3->getX(),p3->getY(),p3->getZ());
-            glVertex3d(p1->getX(),p1->getY(),p1->getZ());
-        glEnd();
+    Lista<PV3D*>* poligono1;
+    Lista<PV3D*>* poligono2;
+    for(int j = 0; j < 15; j++){
+        int n = 3;
+        poligono1 = poligonos->iesimo(j%15);
+        poligono2 = poligonos->iesimo((j+1)%15);
+        
+        for(int i = 0 ; i < lados-1; i++){
+            glColor4d(0,3,0, 1.0);
+            glBegin(GL_LINE_LOOP);
+                PV3D* p1 = poligono1->iesimo(i);
+                PV3D* p3 = poligono2->iesimo(i);
+                glVertex3d(p3->getX(),p3->getY(),p3->getZ());
+                glVertex3d(p1->getX(),p1->getY(),p1->getZ());
+            glEnd();
 
-        glColor4d(0,3,0, 1.0);
-        glBegin(GL_LINES);
-            PV3D* p2 = poligono1->iesimo(i+1);
-            PV3D* p4 = poligono2->iesimo(i+1);
-            glVertex3d(p2->getX(),p2->getY(),p2->getZ());
-            glVertex3d(p4->getX(),p4->getY(),p4->getZ());
-        glEnd();
+            glColor4d(0,3,0, 1.0);
+            glBegin(GL_LINES);
+                PV3D* p2 = poligono1->iesimo(i+1);
+                PV3D* p4 = poligono2->iesimo(i+1);
+                glVertex3d(p2->getX(),p2->getY(),p2->getZ());
+                glVertex3d(p4->getX(),p4->getY(),p4->getZ());
+            glEnd();
 
-    }  
+        }
+    }
 
     //delete poligonos;
 
