@@ -129,7 +129,7 @@ void __fastcall TGLForm3D::GLScene() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     //Dibujo de los ejes
-    /*glBegin(GL_LINES);
+    glBegin(GL_LINES);
         glColor4d(1.0, 0.0, 0.0, 1.0);
         glVertex3d(0.0, 0.0, 0.0);
         glVertex3d(10.0, 0.0, 0.0);
@@ -141,7 +141,7 @@ void __fastcall TGLForm3D::GLScene() {
         glColor4d(0.0, 0.0, 1.0, 1.0);
         glVertex3d(0.0, 0.0, 0.0);
         glVertex3d(0.0, 0.0, 10.0);
-    glEnd();*/
+    glEnd();
 
     /*
     int radio = 1;
@@ -222,6 +222,16 @@ void __fastcall TGLForm3D::GLScene() {
     //delete poligonos;
     */
 
+    // CURVA
+    for(int valor=0; valor<15; valor++){
+        glColor4d(0.0, 0.0, 0, 1.0);
+        glBegin(GL_POINTS);
+        for(int t=0; t<1000; t++){
+                //glVertex3d(3*cos(t), 2 * cos(1.5*t), 3*sin(t)); // Montaña rusa
+                glVertex3d(7*cos(t), 0, 7*sin(t)); // Curva
+        }
+        glEnd();
+    }
     rollerCoaster->dibujaRoller();
 
     //Dibujo de la esfera blanca
@@ -252,7 +262,7 @@ void __fastcall TGLForm3D::FormDestroy(TObject *Sender) {
 
 void TGLForm3D::crearObjetosEscena() {
     esfera = gluNewQuadric();
-    rollerCoaster = new RollerCoaster(20,2);
+    rollerCoaster = new RollerCoaster(20,20);
 }
 
 //---------------------------------------------------------------------------
