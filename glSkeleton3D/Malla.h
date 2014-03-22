@@ -54,8 +54,8 @@ class Malla
 			GLdouble verticeX, verticeY, verticeZ;
 
 			for (int i = 0; i < numCaras; i++) {
-				
-				glColor3d(0,0,0);
+
+                                glColor3d(0,0,0);
 				glLineWidth(1.0);
 				glBegin(GL_LINE_LOOP);
 

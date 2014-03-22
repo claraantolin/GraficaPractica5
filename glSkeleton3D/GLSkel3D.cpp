@@ -224,7 +224,7 @@ void __fastcall TGLForm3D::GLScene() {
 
     // CURVA
     for(int valor=0; valor<15; valor++){
-        glColor4d(0.0, 0.0, 0, 1.0);
+        glColor4d(1,1,1, 1.0);
         glBegin(GL_POINTS);
         for(int t=0; t<1000; t++){
                 //glVertex3d(3*cos(t), 2 * cos(1.5*t), 3*sin(t)); // Montaña rusa
@@ -262,7 +262,7 @@ void __fastcall TGLForm3D::FormDestroy(TObject *Sender) {
 
 void TGLForm3D::crearObjetosEscena() {
     esfera = gluNewQuadric();
-    rollerCoaster = new RollerCoaster(20,20);
+    rollerCoaster = new RollerCoaster(30,15);
 }
 
 //---------------------------------------------------------------------------

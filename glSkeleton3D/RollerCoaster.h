@@ -50,17 +50,16 @@ class RollerCoaster : public Malla
         
         void calculaVertices(){
 
-            int radio = 7;
-            int radioPrima = 1;
+            int radio = 1;
             float t; double inc; Lista<PV3D*>* matriz;
             for(int valor=0; valor<numRodajas; valor++){
             
-                t = (2* M_PI * valor) / 15.0; // habia 15.0
-                matriz = hazMatriz(t,radio);  // en vez de radio habia un 7
+                t = (2* M_PI * valor) / 15;
+                matriz = hazMatriz(t,7);
                 inc = (2*PI/numLados);
 
                 for(int i=0; i<numLados; i++){
-                    PV3D* nodo = new PV3D(radioPrima*cos(2*PI-i*inc), radioPrima*sin(2*PI-i*inc),0,1);
+                    PV3D* nodo = new PV3D(radio*cos(2*PI-i*inc), radio*sin(2*PI-i*inc),0,1);
                     PV3D* res = multiplicaMatrices(matriz, nodo);
                     vertices->ponElem(res);
                     delete nodo;
@@ -73,22 +72,20 @@ class RollerCoaster : public Malla
 
             for(int indiceRodaja = 0, lado = 0; indiceRodaja < numRodajas; indiceRodaja++, lado = lado+numLados){
                 
-                for(int indiceCara = lado, indAux = 0; indiceCara < (lado+numLados); indiceCara++, indAux++){
+                for(int indiceCara = lado, indAux = 0; indiceCara < (lado+numLados); indiceCara++, indAux++){ 
 
                     Lista<VerticeNormal*>* arrayVN = new Lista<VerticeNormal*>();
 
                     // Rellenamos arrayVN de la clase Cara
                     arrayVN->ponElem(new VerticeNormal(indiceCara % numVertices ,indiceCara));
                     
-                    if(indAux == numLados) // estamos en el ultimo lado de la rodaja actual
+                    if(indAux == numLados-1){ // estamos en el ultimo lado de la rodaja actual
                         arrayVN->ponElem(new VerticeNormal(lado % numVertices ,indiceCara));
-                    else
-                        arrayVN->ponElem(new VerticeNormal((indiceCara+1) % numVertices ,indiceCara));
-                    
-                    if(indAux == numLados) // estamos en el ultimo lado de la rodaja actual
                         arrayVN->ponElem(new VerticeNormal((lado+numLados) % numVertices ,indiceCara));
-                    else
+                    }else{
+                        arrayVN->ponElem(new VerticeNormal((indiceCara+1) % numVertices ,indiceCara));
                         arrayVN->ponElem(new VerticeNormal((indiceCara+numLados+1) % numVertices ,indiceCara));
+                    }
                     
                     arrayVN->ponElem(new VerticeNormal((indiceCara+numLados) % numVertices ,indiceCara));
 
