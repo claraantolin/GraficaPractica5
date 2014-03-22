@@ -80,17 +80,17 @@ class RollerCoaster : public Malla
                     // Rellenamos arrayVN de la clase Cara
                     arrayVN->ponElem(new VerticeNormal(indiceCara % numVertices ,indiceCara));
                     
-                    if(indAux == 5) // estamos en el ultimo lado de la rodaja actual
+                    if(indAux == numLados-1) // estamos en el ultimo lado de la rodaja actual
                         arrayVN->ponElem(new VerticeNormal(lado % numVertices ,indiceCara));
                     else
                         arrayVN->ponElem(new VerticeNormal((indiceCara+1) % numVertices ,indiceCara));
                     
-                    arrayVN->ponElem(new VerticeNormal((indiceCara+numLados) % numVertices ,indiceCara));
-                    
-                    if(indAux == 5) // estamos en el ultimo lado de la rodaja actual
+                    if(indAux == numLados-1) // estamos en el ultimo lado de la rodaja actual
                         arrayVN->ponElem(new VerticeNormal((lado+numLados) % numVertices ,indiceCara));
                     else
                         arrayVN->ponElem(new VerticeNormal((indiceCara+numLados+1) % numVertices ,indiceCara));
+                    
+                    arrayVN->ponElem(new VerticeNormal((indiceCara+numLados) % numVertices ,indiceCara));
 
                     caras->ponElem(new Cara(4,arrayVN)); // Siempre una cara va a estar compuesta de 4 vertices, 2 a 2
                 }

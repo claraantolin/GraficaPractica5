@@ -76,11 +76,11 @@ class Malla
 						verticeX = vertices->iesimo(iV)->getX();
 						verticeY = vertices->iesimo(iV)->getY();
 						verticeZ = vertices->iesimo(iV)->getZ();
-
+                      
 						glVertex3d(verticeX,verticeY,verticeZ);
-	     				}
+	     			}
 
-                                glEnd();
+                glEnd();
 			}
 
 	    }// Dibuja        
