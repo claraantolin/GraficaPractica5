@@ -17,23 +17,16 @@
 //---------------------------------------------------------------------------
 class Cara                                                                     
 {                                                             
-   private:
+    private:
+
         int numVertices;
         Lista<VerticeNormal*>* arrayVN;
 
-   public:
-        Cara(){
-            numVertices = 0;
-            arrayVN = NULL;
-        };
-        Cara(int numV, Lista<VerticeNormal*>* vn){
-            numVertices = numV;
-            arrayVN = vn;
-        }
-        ~Cara(){                                                   
-            delete arrayVN;
-            numVertices = 0;
-        }
+    public:
+
+        Cara(){numVertices = 0;};
+        Cara(int numV, Lista<VerticeNormal*>* vn){ numVertices = numV; arrayVN = vn; }
+        ~Cara(){ delete arrayVN; numVertices = 0; }
         int getNumVertices(){ return numVertices; }
         Lista<VerticeNormal*>* getArrayVN(){ return arrayVN; }
         int getIndiceNormal(int k){ return arrayVN->iesimo(k)->getVerticeNormal(); }

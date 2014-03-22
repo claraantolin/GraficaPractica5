@@ -21,29 +21,23 @@
 class RollerCoaster : public Malla
 {
    private:
-        GLdouble numLados;
-        GLdouble numRodajas;
-        GLdouble numVerticesTotales;
+        int numLados;
+        int numRodajas;
         
    public:
         RollerCoaster();
-        RollerCoaster(GLdouble nlados, GLdouble nRodajas):Malla(0,new Lista<PV3D*>(), 0, new Lista<PV3D*>(), 0, NULL){
+        RollerCoaster(int nlados, int nRodajas):Malla(0,new Lista<PV3D*>(), 0, new Lista<PV3D*>(), 0, new Lista<Cara*>()){
             
             // Damos valor a nuestros atributos
             numLados = nlados;
             numRodajas = nRodajas;
-            numVerticesTotales = nlados * nRodajas;
 
             // Damos valor a los atributos de la malla
-            GLdouble numVertices = numVerticesTotales;
-            Lista<PV3D*>* vertices = calculaVertices();
-            GLdouble numNormales = numLados;
-            Lista<PV3D*>* normales = new Lista<PV3D*>();
-            GLdouble numCaras = numLados;
-            Lista<Cara*>* caras = calculaCaras();
-
-            // Rellenamos la malla
-            setAtributosMalla(numVertices, vertices, numNormales, normales, numCaras, caras);
+            numVertices = nlados * nRodajas;
+            calculaVertices();
+            numNormales = numVertices; //=numCaras, frecuentemente
+            numCaras = numVertices;
+            calculaCaras();
 
             //Llamamos a newell para calcular las normales
             RellenaVectorNormalPorNewell();
@@ -51,60 +45,56 @@ class RollerCoaster : public Malla
         
         ~RollerCoaster(){
             numLados = 0;
-            numRodajas = 0;
-            numVerticesTotales = 0;
-            
+            numRodajas = 0;            
         };
         
-        Lista<PV3D*>* calculaVertices(){
+        void calculaVertices(){
 
-            Lista<PV3D*>* verticesT = new Lista<PV3D*>();
-            int radio = 3;
-
+            int radio = 5;
             for(int valor=0; valor<numRodajas; valor++){
-
-                float t = (2* M_PI * valor) / numLados; // habia 15.0
+            
+                float t = (2* M_PI * valor) / numLados; // habia 15.0 
                 Lista<PV3D*>* matriz = hazMatriz(t,radio);  // en vez de radio habia un 7
-                Lista<PV3D*>* poligono = new Lista<PV3D*>();
                 double inc=(2*PI/numLados);
 
                 for(int i=0; i<numLados; i++){
                     PV3D* nodo = new PV3D(radio*cos(2*PI-i*inc) , radio*sin(2*PI-i*inc),0,1);
-                    poligono->ponElem(nodo);
-                }
-                for(int i=0; i<numLados; i++){
-                    PV3D* res = multiplicaMatrices(matriz, poligono->iesimo(i));
-                    verticesT->ponElem(res);
+                    PV3D* res = multiplicaMatrices(matriz, nodo);
+                    vertices->ponElem(res);
+                    delete nodo;
                 }
 
-                delete poligono;
                 delete matriz;
             }
 
-            return verticesT;
         }
 
-        Lista<Cara*>* calculaCaras(){
+        void calculaCaras(){
 
-            Lista<Cara*>* listaCaras = new Lista<Cara*>();
-            int lado = 0;
-
-            for(int indiceCara = 0; indiceCara < numVerticesTotales; indiceCara++, lado = lado+numLados){
+            for(int indiceRodaja = 0, lado = 0; indiceRodaja < numRodajas; indiceRodaja++, lado = lado+numLados){
                 
-                Cara* cara = new Cara();
-                cara->setNumVertices(numLados);
-                Lista<VerticeNormal*>* arrayVN = new Lista<VerticeNormal*>();
+                for(int indiceCara = lado, indAux = 0; indiceCara < (lado+numLados); indiceCara++, indAux++){
 
-                // Rellenamos arrayVN de la clase Cara
-                for(int i = lado; i < lado+numLados; i++)
-                    arrayVN->ponElem(new VerticeNormal(i,indiceCara));
-                
-                cara->setArrayVN(arrayVN);
-                listaCaras->ponElem(cara);
+                    Lista<VerticeNormal*>* arrayVN = new Lista<VerticeNormal*>();
+
+                    // Rellenamos arrayVN de la clase Cara
+                    arrayVN->ponElem(new VerticeNormal(indiceCara % numVertices ,indiceCara));
+                    
+                    if(indAux == 5) // estamos en el ultimo lado de la rodaja actual
+                        arrayVN->ponElem(new VerticeNormal(lado % numVertices ,indiceCara));
+                    else
+                        arrayVN->ponElem(new VerticeNormal((indiceCara+1) % numVertices ,indiceCara));
+                    
+                    arrayVN->ponElem(new VerticeNormal((indiceCara+numLados) % numVertices ,indiceCara));
+                    
+                    if(indAux == 5) // estamos en el ultimo lado de la rodaja actual
+                        arrayVN->ponElem(new VerticeNormal((lado+numLados) % numVertices ,indiceCara));
+                    else
+                        arrayVN->ponElem(new VerticeNormal((indiceCara+numLados+1) % numVertices ,indiceCara));
+
+                    caras->ponElem(new Cara(4,arrayVN)); // Siempre una cara va a estar compuesta de 4 vertices, 2 a 2
+                }
             }
-
-            return listaCaras;
-
         }
 
         void dibujaRoller(){

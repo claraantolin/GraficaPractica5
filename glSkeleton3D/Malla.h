@@ -19,40 +19,37 @@
 class Malla
 {
    protected:
+    
         int numVertices;
-        Lista<PV3D*>* vertice;
+        Lista<PV3D*>* vertices;
         int numNormales; //=numCaras, frecuentemente
-        Lista<PV3D*>* normal;
+        Lista<PV3D*>* normales;
         int numCaras;
-        Lista<Cara*>* cara;
+        Lista<Cara*>* caras;
+
    public:
-        //Malla(){ Malla(0,new Lista<PV3D*>(), 0, new Lista<PV3D*>(), 0, new Lista<Cara*>()); };
-        Malla();//{ Malla(0,NULL, 0, NULL, 0, NULL); };
+        
+        Malla();
         Malla(int inumV, Lista<PV3D*>* v, int numN, Lista<PV3D*>* n, int numC, Lista<Cara*>* c){
-            numVertices = inumV; vertice = v;
-            numNormales = numN;  normal = n;
-            numCaras = numC;     cara = c;
+            numVertices = inumV; vertices = v;
+            numNormales = numN;  normales = n;
+            numCaras = numC;     caras = c;
         };
+        
         ~Malla(){
         	
-            delete vertice;
-            delete normal;
-            delete cara;
+            delete vertices;
+            delete normales;
+            delete caras;
 
             numVertices = 0;
             numNormales = 0;
             numCaras = 0;
             
-        };
-
-        void setAtributosMalla(int inumV, Lista<PV3D*>* v, int numN, Lista<PV3D*>* n, int numC, Lista<Cara*>* c){
-        	numVertices = inumV; vertice = v;
-	     	numNormales = numN; normal = n;
-	     	numCaras = numC; cara = c;
-        }
+        };                     
 
         void dibuja(){
-
+        
 			GLdouble normalX, normalY, normalZ;
 			GLdouble verticeX, verticeY, verticeZ;
 
@@ -62,59 +59,61 @@ class Malla
 				glLineWidth(1.0);
 				glBegin(GL_LINE_LOOP);
 
-					for (int j = 0; j < cara->iesimo(i)->getNumVertices(); j++) {
+					for (int j = 0; j < caras->iesimo(i)->getNumVertices(); j++) {
 
-						int iN = cara->iesimo(i)-> getIndiceNormal(j);
-						int iV = cara->iesimo(i)-> getIndiceVertice(j);
+						int iN = caras->iesimo(i)-> getIndiceNormal(j);
+						int iV = caras->iesimo(i)-> getIndiceVertice(j);
 
-						normalX = normal->iesimo(iN)->getX();
-						normalY = normal->iesimo(iN)->getY();
-						normalZ = normal->iesimo(iN)->getZ();
+						normalX = normales->iesimo(iN)->getX();
+						normalY = normales->iesimo(iN)->getY();
+						normalZ = normales->iesimo(iN)->getZ();
 
 						glNormal3d(normalX,normalY,normalZ);
 						
 						//Si hubiera coordenadas de textura, aqui se suministrarian
 						//las coordenadas de textura del vertice j con glTexCoor2f(...);
 
-						verticeX = vertice->iesimo(iV)->getX();
-						verticeY = vertice->iesimo(iV)->getY();
-						verticeZ = vertice->iesimo(iV)->getZ();
+						verticeX = vertices->iesimo(iV)->getX();
+						verticeY = vertices->iesimo(iV)->getY();
+						verticeZ = vertices->iesimo(iV)->getZ();
 
 						glVertex3d(verticeX,verticeY,verticeZ);
-					}
+	     				}
 
-				glEnd();
+                                glEnd();
 			}
 
-	    }// Dibuja
+	    }// Dibuja        
  
             
-            void RellenaVectorNormalPorNewell(){
-			
-                Cara* c; GLdouble x; GLdouble y; GLdouble z;
-                PV3D* vertActual; PV3D* vertSiguiente;
+        void RellenaVectorNormalPorNewell(){
+		
+            Cara* c; GLdouble x; GLdouble y; GLdouble z;
+            PV3D* vertActual; PV3D* vertSiguiente;
 
-                for(int pos = 0; pos < numCaras; pos++){
+            for(int pos = 0; pos < numCaras; pos++){
 
-                        c = cara->iesimo(pos);
-                        x = 0; y = 0; z = 0;
+                c = caras->iesimo(pos);
+                x = 0; y = 0; z = 0;
 
-                        for(int i = 0; i < c->getNumVertices(); i++){
+                for(int i = 0; i < c->getNumVertices(); i++){
 
-                                vertActual = vertice->iesimo(c->getIndiceVertice(i));
-                                vertSiguiente = vertice->iesimo(c->getIndiceVertice((i+1) % c->getNumVertices()));
-                                x += (vertActual->getY() - vertSiguiente->getY()) * (vertActual->getZ() + vertSiguiente->getZ());
-                                y += (vertActual->getZ() - vertSiguiente->getZ()) * (vertActual->getX() + vertSiguiente->getX());
-                                z += (vertActual->getX() - vertSiguiente->getX()) * (vertActual->getY() + vertSiguiente->getY());
+                    GLdouble a = c->getIndiceVertice(i);
+                    GLdouble b = c->getIndiceVertice((i+1) % c->getNumVertices());
+                    vertActual = vertices->iesimo(a);
+                    vertSiguiente = vertices->iesimo(b);
+                    x += (vertActual->getY() - vertSiguiente->getY()) * (vertActual->getZ() + vertSiguiente->getZ());
+                    y += (vertActual->getZ() - vertSiguiente->getZ()) * (vertActual->getX() + vertSiguiente->getX());
+                    z += (vertActual->getX() - vertSiguiente->getX()) * (vertActual->getY() + vertSiguiente->getY());
 
-                        }
-
-                        PV3D* n = new PV3D(x,y,z);
-                        n->normaliza();
-                        //normal->iesimo(pos)->set3Coor(x,y,z);
                 }
-                        
-            }// CalculoVectorNormalPorNewell
+
+                PV3D* n = new PV3D(x,y,z);
+                n->normaliza();
+                normales->ponElem(n);
+            }
+                    
+        }// CalculoVectorNormalPorNewell
 		
 };
 
