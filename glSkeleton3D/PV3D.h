@@ -77,7 +77,7 @@ class PV3D
         }
 
 
-        PV3D* profuctoVectorial(PV3D* v){
+        PV3D* productoVectorial(PV3D* v){
             // | i  j  k  | 
             // | xa ya za | = i*ya*zb + j*za*xb + yb*xa*k - k*ya*xb - za*yb*i - xa*j*zb
             // | xb yb zb |
@@ -87,9 +87,9 @@ class PV3D
         	// j*za*xb - j*xa*zb
         	// k*yb*xa - k*ya*xb
 
-            GLdouble componenteX = y * v->getZ() + z * v->getY();
-            GLdouble componenteY = z * v->getX() + x * v->getZ();
-            GLdouble componenteZ = x * v->getY() + y * v->getX();
+            GLdouble componenteX = y * v->getZ() - z * v->getY();
+            GLdouble componenteY = z * v->getX() - x * v->getZ();
+            GLdouble componenteZ = x * v->getY() - y * v->getX();
 
             return new PV3D(componenteX, componenteY, componenteZ, 1);
         }
