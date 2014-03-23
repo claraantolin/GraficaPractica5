@@ -81,7 +81,7 @@ class Malla
                 n->normaliza();
                 normales->ponElem(n);
             }
-                    
+
         }// CalculoVectorNormalPorNewell                    
 
         void dibuja(){
@@ -98,7 +98,7 @@ class Malla
 
             for (int i = 0; i < numCaras; i++) {
 
-                glColor3d(0,0,0);
+                glColor3d(0,1,0);
                 glLineWidth(1.0);
                 glBegin(GL_LINE_LOOP);
 
@@ -119,7 +119,7 @@ class Malla
                         verticeX = vertices->iesimo(iV)->getX();
                         verticeY = vertices->iesimo(iV)->getY();
                         verticeZ = vertices->iesimo(iV)->getZ();
-                      
+
                         glVertex3d(verticeX,verticeY,verticeZ);
                     }
                 glEnd();

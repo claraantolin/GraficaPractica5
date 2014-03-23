@@ -155,7 +155,7 @@ class RollerCoaster : public Malla
 
             matriz->ponElem(n); matriz->ponElem(b); matriz->ponElem(tM); matriz->ponElem(c);
             return matriz;
-        } */
+        }*/
 
 //------------------------------------------------------------------------------
                         /***** hazMatriz *****/
@@ -197,7 +197,7 @@ class RollerCoaster : public Malla
          Lista<PV3D*>* matriz = new Lista<PV3D*>();
          matriz->ponElem(primeraFila); matriz->ponElem(segundaFila); matriz->ponElem(terceraFila); matriz->ponElem(cuartaFila);
          return matriz;
-        }  
+        }
 
 //------------------------------------------------------------------------------
                         /***** dibujaRoller *****/
