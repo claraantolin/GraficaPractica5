@@ -169,16 +169,16 @@ class RollerCoaster : public Malla
         void rotaRoller(int tipo){
             switch(tipo){
                 case 0:
-                    anguloX -= 10.0f;
-                    break;
-                case 1:
-                    anguloX += 10.0f;
-                    break;
-                case 2:
                     anguloY -= 10.0f;
                     break;
-                case 3:
+                case 1:
                     anguloY += 10.0f;
+                    break;
+                case 2:
+                    anguloX -= 10.0f;
+                    break;
+                case 3:
+                    anguloX += 10.0f;
                     break;
                 case 4:
                     anguloZ -= 10.0f;

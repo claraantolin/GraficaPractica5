@@ -290,20 +290,20 @@ void __fastcall TGLForm3D::FormKeyPress(TObject *Sender, char &Key)
             rollerCoaster->rotaRoller(1);
             break;
         // Rotacion con respecto al eje x (rojo)
-        /*case '6':
+        case '6':
             rollerCoaster->rotaRoller(2);
             break;
-        //case '4':
+        case '4':
             rollerCoaster->rotaRoller(3);
             break;
         // Rotacion con respecto al eje z (azul)
-        //case 'a':
+        case 'a':
             rollerCoaster->rotaRoller(4);
             break;
-        //case 'z':
+        case 'z':
             rollerCoaster->rotaRoller(5);
             break;
-        */
+        
         default:
             break;
     }
