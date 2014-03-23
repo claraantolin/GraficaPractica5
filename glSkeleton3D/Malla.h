@@ -27,6 +27,8 @@ class Malla
         int numCaras;
         Lista<Cara*>* caras;
 
+        GLdouble anguloX, anguloY, anguloZ;
+
    public:
         
         Malla();
@@ -34,10 +36,11 @@ class Malla
             numVertices = inumV; vertices = v;
             numNormales = numN;  normales = n;
             numCaras = numC;     caras = c;
+            anguloX = 0.0f; anguloY = 0.0f; anguloZ = 0.0f;
         };
         
         ~Malla(){
-        	
+            
             delete vertices;
             delete normales;
             delete caras;
@@ -45,49 +48,15 @@ class Malla
             numVertices = 0;
             numNormales = 0;
             numCaras = 0;
+
+            anguloX = 0;
+            anguloY = 0;
+            anguloZ = 0;
             
-        };                     
+        }; 
 
-        void dibuja(){
-        
-			GLdouble normalX, normalY, normalZ;
-			GLdouble verticeX, verticeY, verticeZ;
-
-			for (int i = 0; i < numCaras; i++) {
-
-                                glColor3d(0,0,0);
-				glLineWidth(1.0);
-				glBegin(GL_LINE_LOOP);
-
-					for (int j = 0; j < caras->iesimo(i)->getNumVertices(); j++) {
-
-						int iN = caras->iesimo(i)-> getIndiceNormal(j);
-						int iV = caras->iesimo(i)-> getIndiceVertice(j);
-
-						normalX = normales->iesimo(iN)->getX();
-						normalY = normales->iesimo(iN)->getY();
-						normalZ = normales->iesimo(iN)->getZ();
-
-						glNormal3d(normalX,normalY,normalZ);
-						
-						//Si hubiera coordenadas de textura, aqui se suministrarian
-						//las coordenadas de textura del vertice j con glTexCoor2f(...);
-
-						verticeX = vertices->iesimo(iV)->getX();
-						verticeY = vertices->iesimo(iV)->getY();
-						verticeZ = vertices->iesimo(iV)->getZ();
-                      
-						glVertex3d(verticeX,verticeY,verticeZ);
-	     			}
-
-                glEnd();
-			}
-
-	    }// Dibuja        
- 
-            
         void RellenaVectorNormalPorNewell(){
-		
+        
             Cara* c; GLdouble x; GLdouble y; GLdouble z;
             PV3D* vertActual; PV3D* vertSiguiente;
 
@@ -113,8 +82,51 @@ class Malla
                 normales->ponElem(n);
             }
                     
-        }// CalculoVectorNormalPorNewell
-		
+        }// CalculoVectorNormalPorNewell                    
+
+        void dibuja(){
+        
+            GLdouble normalX, normalY, normalZ;
+            GLdouble verticeX, verticeY, verticeZ;
+
+            glMatrixMode(GL_MODELVIEW);
+            //glLoadIdentity();
+            glPushMatrix();
+            glRotatef(anguloX, 1.0, 0.0, 0.0);
+            glRotatef(anguloY, 0.0, 1.0, 0.0);
+            glRotatef(anguloZ, 0.0, 0.0, 1.0);
+
+            for (int i = 0; i < numCaras; i++) {
+
+                glColor3d(0,0,0);
+                glLineWidth(1.0);
+                glBegin(GL_LINE_LOOP);
+
+                    for (int j = 0; j < caras->iesimo(i)->getNumVertices(); j++) {
+
+                        int iN = caras->iesimo(i)-> getIndiceNormal(j);
+                        int iV = caras->iesimo(i)-> getIndiceVertice(j);
+
+                        normalX = normales->iesimo(iN)->getX();
+                        normalY = normales->iesimo(iN)->getY();
+                        normalZ = normales->iesimo(iN)->getZ();
+
+                        glNormal3d(normalX,normalY,normalZ);
+                        
+                        //Si hubiera coordenadas de textura, aqui se suministrarian
+                        //las coordenadas de textura del vertice j con glTexCoor2f(...);
+
+                        verticeX = vertices->iesimo(iV)->getX();
+                        verticeY = vertices->iesimo(iV)->getY();
+                        verticeZ = vertices->iesimo(iV)->getZ();
+                      
+                        glVertex3d(verticeX,verticeY,verticeZ);
+                    }
+                glEnd();
+            }
+            glPopMatrix();
+
+        }// Dibuja
 };
 
 #endif

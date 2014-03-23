@@ -24,6 +24,7 @@ __published:	//IDE-managed Components
     void __fastcall FormPaint(TObject *Sender);
     void __fastcall FormDestroy(TObject *Sender);
     void __fastcall FormCreate(TObject *Sender);
+        void __fastcall FormKeyPress(TObject *Sender, char &Key);
 
 private:        //User declarations
     HDC hdc;

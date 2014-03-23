@@ -21,10 +21,12 @@
 class RollerCoaster : public Malla
 {
    private:
+
         int numLados;
         int numRodajas;
-        
+
    public:
+
         RollerCoaster();
         RollerCoaster(int nlados, int nRodajas):Malla(0,new Lista<PV3D*>(), 0, new Lista<PV3D*>(), 0, new Lista<Cara*>()){
             
@@ -45,12 +47,24 @@ class RollerCoaster : public Malla
         
         ~RollerCoaster(){
             numLados = 0;
-            numRodajas = 0;            
+            numRodajas = 0;          
         };
-        
+
+        GLdouble getAnguloX(){ return anguloX;}
+        GLdouble getAnguloY(){ return anguloY;}
+        GLdouble getAnguloZ(){ return anguloZ;}
+
+        void setAnguloX(GLdouble angX){ anguloX = angX;}
+        void setAnguloY(GLdouble angY){ anguloY = angY;}
+        void setAnguloZ(GLdouble angZ){ anguloZ = angZ;}
+       
+//------------------------------------------------------------------------------
+                        /***** calculaVertices *****/
+//------------------------------------------------------------------------------
+
         void calculaVertices(){
 
-            int radio = 1;
+            int radio = 1; GLdouble x, y, z;
             float t; double inc; Lista<PV3D*>* matriz;
             for(int valor=0; valor<numRodajas; valor++){
             
@@ -59,7 +73,10 @@ class RollerCoaster : public Malla
                 inc = (2*PI/numLados);
 
                 for(int i=0; i<numLados; i++){
-                    PV3D* nodo = new PV3D(radio*cos(2*PI-i*inc), radio*sin(2*PI-i*inc),0,1);
+                    x = radio*cos(2*PI-i*inc);
+                    y = radio*sin(2*PI-i*inc);
+                    z = 0;
+                    PV3D* nodo = new PV3D(x, y, z, 1);
                     PV3D* res = multiplicaMatrices(matriz, nodo);
                     vertices->ponElem(res);
                     delete nodo;
@@ -67,6 +84,10 @@ class RollerCoaster : public Malla
                 delete matriz;
             }
         }
+
+//------------------------------------------------------------------------------
+                        /***** calculaCaras *****/
+//------------------------------------------------------------------------------
 
         void calculaCaras(){
 
@@ -94,9 +115,9 @@ class RollerCoaster : public Malla
             }
         }
 
-        void dibujaRoller(){
-            dibuja();
-        }
+//------------------------------------------------------------------------------
+                        /***** multiplicaMatrices *****/
+//------------------------------------------------------------------------------
 
         PV3D* multiplicaMatrices(Lista<PV3D*>* m, PV3D* p){
 
@@ -116,6 +137,10 @@ class RollerCoaster : public Malla
 
         }
 
+//------------------------------------------------------------------------------
+                        /***** hazMatriz *****/
+//------------------------------------------------------------------------------
+
         Lista<PV3D*>* hazMatriz(GLfloat t, GLfloat r){
 
             Lista<PV3D*>* matriz = new Lista<PV3D*>();
@@ -125,9 +150,48 @@ class RollerCoaster : public Malla
             PV3D* tM = new PV3D(-sin(t),0, cos(t),  r*sin(t));
             PV3D* c = new PV3D(0,0,0, 1);
 
-            matriz->ponElem(n); matriz->ponElem(b); matriz->ponElem(tM); matriz->ponElem(c); 
+            matriz->ponElem(n); matriz->ponElem(b); matriz->ponElem(tM); matriz->ponElem(c);
             return matriz;
         }
+
+//------------------------------------------------------------------------------
+                        /***** dibujaRoller *****/
+//------------------------------------------------------------------------------
+
+        void dibujaRoller(){
+            dibuja();
+        }
+
+//------------------------------------------------------------------------------
+                        /***** rotaRoller *****/
+//------------------------------------------------------------------------------
+
+        void rotaRoller(int tipo){
+            switch(tipo){
+                case 0:
+                    anguloX -= 10.0f;
+                    break;
+                case 1:
+                    anguloX += 10.0f;
+                    break;
+                case 2:
+                    anguloY -= 10.0f;
+                    break;
+                case 3:
+                    anguloY += 10.0f;
+                    break;
+                case 4:
+                    anguloZ -= 10.0f;
+                    break;
+                case 5:
+                    anguloZ += 10.0f;
+                    break;
+                default: break;
+            }
+        }
+
+//------------------------------------------------------------------------------
+
 };
 
 #endif

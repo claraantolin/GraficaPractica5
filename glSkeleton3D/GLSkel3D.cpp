@@ -143,6 +143,7 @@ void __fastcall TGLForm3D::GLScene() {
         glVertex3d(0.0, 0.0, 10.0);
     glEnd();
 
+
     /*
     int radio = 1;
     int valor = 0;
@@ -232,6 +233,7 @@ void __fastcall TGLForm3D::GLScene() {
         }
         glEnd();
     }
+    
     rollerCoaster->dibujaRoller();
 
     //Dibujo de la esfera blanca
@@ -275,4 +277,39 @@ void TGLForm3D::liberarObjetosEscena() {
 //---------------------------------------------------------------------------
 
 
+
+void __fastcall TGLForm3D::FormKeyPress(TObject *Sender, char &Key)
+{
+
+    switch(Key){
+        // Rotacion con respecto al eje y (verde)
+        case '8':   // Sentido de las agujas del rejor
+            rollerCoaster->rotaRoller(0);
+            break;
+        case '2':   // Contrario a las agujas del reloj
+            rollerCoaster->rotaRoller(1);
+            break;
+        // Rotacion con respecto al eje x (rojo)
+        /*case '6':
+            rollerCoaster->rotaRoller(2);
+            break;
+        //case '4':
+            rollerCoaster->rotaRoller(3);
+            break;
+        // Rotacion con respecto al eje z (azul)
+        //case 'a':
+            rollerCoaster->rotaRoller(4);
+            break;
+        //case 'z':
+            rollerCoaster->rotaRoller(5);
+            break;
+        */
+        default:
+            break;
+    }
+
+    GLScene();
+}
+
+//---------------------------------------------------------------------------
 
