@@ -104,37 +104,10 @@ class Malla
             glRotatef(anguloY, 0.0, 1.0, 0.0);
             glRotatef(anguloZ, 0.0, 0.0, 1.0);
 
-            if(modoN == 1){
-
-                glBegin(GL_LINES);
-                for (int i = 0; i < numCaras; i++) {
-                    for (int j = 0; j < caras->iesimo(i)-> getNumVertices(); j++) {
-                         
-                        int iN = caras->iesimo(i)-> getIndiceNormal(j);
-                        int iV = caras->iesimo(i)-> getIndiceVertice(j);
-     
-                        normalX = normales->iesimo(iN)->getX();
-                        normalY = normales->iesimo(iN)->getY();
-                        normalZ = normales->iesimo(iN)->getZ();
-                             
-                        verticeX = vertices->iesimo(iV)->getX();
-                        verticeY = vertices->iesimo(iV)->getY();
-                        verticeZ = vertices->iesimo(iV)->getZ();
-
-                        // pintamos cada normal, lo hacemos asi para no poner 4 normales por cada cara
-                         if(j == 1){
-                            glColor3d(3,3,3);
-                            glVertex3d(verticeX,verticeY,verticeZ);
-                            glVertex3d(verticeX-normalX,verticeY-normalY,verticeZ-normalZ);
-                        }
-
-                    }
-                }
-            }
-
-            for (int i = 0; i < numCaras; i++) {
+            for (int i = 0; i < numCaras; i++){
                                      
                     glLineWidth(1.0);
+
                     if(modoT == 0)
                         glBegin(GL_POLYGON);
                     else
@@ -160,17 +133,23 @@ class Malla
                         verticeZ = vertices->iesimo(iV)->getZ();
 
                         // Pintamos cada vertice
-                        glColor3d(1,1,0);
+                        glColor3d(0,0,1);
                         glVertex3d(verticeX,verticeY,verticeZ);
 
                     } // for 2
 
                     glEnd();
 
+                    // Dibujamos las normales
+                    if(modoN == 1){
+                        glBegin(GL_LINES);
+                            glColor3d(3,3,3);
+                            glVertex3d(verticeX,verticeY,verticeZ);
+                            glVertex3d(verticeX-normalX,verticeY-normalY,verticeZ-normalZ);
+                        glEnd();
+                    }
+
             }// for 1
-
-
-            if(modoN == 1) glEnd();
             
             glPopMatrix();
 
