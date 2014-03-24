@@ -31,18 +31,18 @@ class Coche : public Malla
         Coche(int nlados, int nRodajas):Malla(0,new Lista<PV3D*>(), 0, new Lista<PV3D*>(), 0, new Lista<Cara*>()){
 
             // Damos valor a nuestros atributos
-            numLados = 4;
-            numRodajas = 2;
+            numLados = nlados;
+            numRodajas = nRodajas;
 
             // Damos valor a los atributos de la malla
             numVertices = nlados * nRodajas;
             calculaVertices();
             numNormales = numVertices; //=numCaras, frecuentemente
-            //numCaras = numVertices;
-            //calculaCaras();
+            numCaras = numVertices;
+            calculaCaras();
 
             //Llamamos a newell para calcular las normales
-            //RellenaVectorNormalPorNewell();
+            RellenaVectorNormalPorNewell();
         }
         
         ~Coche(){
@@ -217,17 +217,44 @@ class Coche : public Malla
 
         void dibujaCoche(){
         
-            //dibuja(0);
+            dibuja(0,1);
 
-            glColor3d(0,1,0);
+            /*Color3d(0,1,0);
             glLineWidth(1.0);
             glBegin(GL_LINE_LOOP);
                 for(int i =0 ; i<vertices->numElem(); i++)
                         glVertex3d(vertices->iesimo(i)->getX(), vertices->iesimo(i)->getY(), vertices->iesimo(i)->getZ());
-            glEnd();
+            glEnd(); */
         }
 
 
+//------------------------------------------------------------------------------
+                        /***** rotaRoller *****/
+//------------------------------------------------------------------------------
+
+        void rotaCoche(tipo){
+            switch(tipo){
+                case 0:
+                    anguloY -= 10.0f;
+                    break;
+                case 1:
+                    anguloY += 10.0f;
+                    break;
+                case 2:
+                    anguloX -= 10.0f;
+                    break;
+                case 3:
+                    anguloX += 10.0f;
+                    break;
+                case 4:
+                    anguloZ -= 10.0f;
+                    break;
+                case 5:
+                    anguloZ += 10.0f;
+                    break;
+                default: break;
+            }
+        }
 
 //------------------------------------------------------------------------------
 
