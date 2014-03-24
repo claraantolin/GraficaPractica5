@@ -96,11 +96,37 @@ class Malla
             glRotatef(anguloY, 0.0, 1.0, 0.0);
             glRotatef(anguloZ, 0.0, 0.0, 1.0);
 
+            if(modoN == 1){
+
+                glBegin(GL_LINES);
+                for (int i = 0; i < numCaras; i++) {
+                    for (int j = 0; j < caras->iesimo(i)-> getNumVertices(); j++) {
+                         
+                        int iN = caras->iesimo(i)-> getIndiceNormal(j);
+                        int iV = caras->iesimo(i)-> getIndiceVertice(j);
+     
+                        normalX = normales->iesimo(iN)->getX();
+                        normalY = normales->iesimo(iN)->getY();
+                        normalZ = normales->iesimo(iN)->getZ();
+                             
+                        verticeX = vertices->iesimo(iV)->getX();
+                        verticeY = vertices->iesimo(iV)->getY();
+                        verticeZ = vertices->iesimo(iV)->getZ();
+
+                        // pintamos cada normal, lo hacemos asi para no poner 4 normales por cada cara
+                         if(j == 1){
+                            glColor3d(3,3,3);
+                            glVertex3d(verticeX,verticeY,verticeZ);
+                            glVertex3d(verticeX-normalX,verticeY-normalY,verticeZ-normalZ);
+                        }
+
+                    }
+                }
+            }
+            else
+
             for (int i = 0; i < numCaras; i++) {
-                               
-                for (int j = 0; j < caras->iesimo(i)->getNumVertices(); j++) {
-                  
-                    
+                                     
                     //glLineWidth(1.0);
                     if(modoT == 0)
                         glBegin(GL_POLYGON);
@@ -117,7 +143,7 @@ class Malla
                         normalZ = normales->iesimo(iN)->getZ();
                         
                         // Le asignamos una normal a cada vertice
-                        glNormal3d(normalX,normalY,normalZ);
+                        glNormal3d(-normalX,-normalY,-normalZ);
                              
                         //Si hubiera coordenadas de textura, aqui se suministrarian
                         //las coordenadas de textura del vertice j con glTexCoor2f(...);
@@ -130,16 +156,25 @@ class Malla
                         glColor3d(1,1,0);
                         glVertex3d(verticeX,verticeY,verticeZ);
 
-                        // pintamos cada normal, Lo hacemos asi para no poner 4 normales por cada cara
-                        if((modoN == 1) && (j == 0)){
-                            glColor3d(3,3,3);
-                            glVertex3d(verticeX-normalX,verticeY-normalY,verticeZ-normalZ);
-                        }
-                    }
-                    glEnd();
-                }
-            }
+                        // pintamos cada normal, lo hacemos asi para no poner 4 normales por cada cara
+                        /*if((modoN == 1) && (j == 3)){
 
+                            glBegin(GL_LINE_LOOP);
+                            glColor3d(3,3,3);
+                                //glVertex3d(verticeXAux-normalX,verticeYAux-normalY,verticeZAux-normalZ);
+                                glVertex3d(verticeX-normalX,verticeY-normalY,verticeZ-normalZ);
+                            glEnd();
+                        }*/
+
+                    } // for 2
+
+                    glEnd();
+
+            }// for 1
+
+
+            if(modoN == 1) glEnd();
+            
             glPopMatrix();
 
         }// Dibuja
