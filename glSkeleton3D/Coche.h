@@ -66,13 +66,13 @@ class Coche : public Malla
 
         void incrementaPos(){
                 pos++;
-                pos = pos % 25;
+                pos = pos % 60;
                 mueveCoche();
         }
 
         void decrementaPos(){
                 pos--;
-                pos = pos % 25;
+                pos = pos % 60;
                 mueveCoche();
         }
 
@@ -82,7 +82,7 @@ class Coche : public Malla
 
         void calculaVertices(){
 
-            GLdouble t = (2* M_PI * pos) / 25;
+            GLdouble t = (2* M_PI * pos) / 60;
             Lista<PV3D*>* matriz = hazMatriz(t,7);
             
             double inc=(2*PI/numLados);
@@ -94,7 +94,7 @@ class Coche : public Malla
             }
 
              for(int i=0; i<numLados; i++){
-                PV3D* nodo = new PV3D(   cos(2*PI-i*inc)*0.7  , sin(2*PI-i*inc)*0.7  +0.7  , 0 ,1) ;
+                PV3D* nodo = new PV3D(   cos(2*PI-i*inc)*0.7  , sin(2*PI-i*inc)*0.7   , 0 +0.7 ,1) ;
                 PV3D* res = multiplicaMatrices(matriz, nodo);
                 vertices->ponElem(res);
                 delete nodo;
@@ -222,9 +222,9 @@ class Coche : public Malla
                         /***** dibujaCoche *****/
 //------------------------------------------------------------------------------
 
-        void dibujaCoche(){
+        void dibujaCoche(int modoN, int modoT){
         
-            dibuja(0,0);
+            dibuja(modoN, modoT);
 
             //Dibujamos las tapas del coche
             glMatrixMode(GL_MODELVIEW);
@@ -232,7 +232,7 @@ class Coche : public Malla
             glRotatef(anguloX, 1.0, 0.0, 0.0);
             glRotatef(anguloY, 0.0, 1.0, 0.0);
             glRotatef(anguloZ, 0.0, 0.0, 1.0);
-            glColor3d(1,1,0);
+            glColor3d(0,0,1);
             glLineWidth(1.0);
 
             glBegin(GL_POLYGON);
