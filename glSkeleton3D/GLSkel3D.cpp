@@ -238,7 +238,7 @@ void __fastcall TGLForm3D::GLScene() {
     rollerCoaster->dibujaRoller(modoNormales, modoTransparencia);
 
 
-    //coche->dibujaCoche();
+    coche->dibujaCoche();
 
     //Dibujo de la esfera blanca
     /*glColor3d(1.0, 1.0, 1.0);

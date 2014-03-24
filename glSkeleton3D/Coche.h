@@ -67,19 +67,18 @@ class Coche : public Malla
              Lista<PV3D*>* matriz = hazMatriz(0,7);
             double inc=(2*PI/numLados);
             for(int i=0; i<numLados; i++){
-                PV3D* nodo = new PV3D(   cos(2*PI-i*inc) , 0 , sin(2*PI-i*inc),1);
+                PV3D* nodo = new PV3D(   cos(2*PI-i*inc)*0.7  , sin(2*PI-i*inc)*0.7  , 0  ,1);
                 PV3D* res = multiplicaMatrices(matriz, nodo);
                 vertices->ponElem(res);
                 delete nodo;
             }
 
              for(int i=0; i<numLados; i++){
-                PV3D* nodo = new PV3D(   cos(2*PI-i*inc) +1 , 0 , sin(2*PI-i*inc) ,1) ;
+                PV3D* nodo = new PV3D(   cos(2*PI-i*inc)*0.7  , sin(2*PI-i*inc)*0.7  +0.7  , 0 ,1) ;
                 PV3D* res = multiplicaMatrices(matriz, nodo);
                 vertices->ponElem(res);
                 delete nodo;
             }
-
 
             delete matriz;
         }
@@ -209,6 +208,27 @@ class Coche : public Malla
                 for(int i =0 ; i<vertices->numElem(); i++)
                         glVertex3d(vertices->iesimo(i)->getX(), vertices->iesimo(i)->getY(), vertices->iesimo(i)->getZ());
             glEnd(); */
+
+            //Dibujamos las tapas del coche
+            glMatrixMode(GL_MODELVIEW);
+            glPushMatrix();
+            glRotatef(anguloX, 1.0, 0.0, 0.0);
+            glRotatef(anguloY, 0.0, 1.0, 0.0);
+            glRotatef(anguloZ, 0.0, 0.0, 1.0);
+            glColor3d(1,1,0);
+            glLineWidth(1.0);
+
+            glBegin(GL_POLYGON);
+                for(int i =0 ; i<4; i++)
+                        glVertex3d(vertices->iesimo(i)->getX(), vertices->iesimo(i)->getY(), vertices->iesimo(i)->getZ());
+            glEnd();
+
+            glBegin(GL_POLYGON);
+                for(int i =4 ; i<8; i++)
+                        glVertex3d(vertices->iesimo(i)->getX(), vertices->iesimo(i)->getY(), vertices->iesimo(i)->getZ());
+            glEnd();
+
+            glPopMatrix();
         }
 
 
