@@ -268,7 +268,7 @@ void __fastcall TGLForm3D::FormDestroy(TObject *Sender) {
 
 void TGLForm3D::crearObjetosEscena() {
     esfera = gluNewQuadric();
-    rollerCoaster = new RollerCoaster(10,25);
+    rollerCoaster = new RollerCoaster(15,60);
     coche = new Coche(4,2);
     coche->incrementaPos();
     modoNormales = 0;

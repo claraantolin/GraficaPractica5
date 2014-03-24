@@ -55,6 +55,10 @@ class Malla
             
         }; 
 
+//------------------------------------------------------------------------------
+                        /***** RellenaVectorNormalPorNewell *****/
+//------------------------------------------------------------------------------
+
         void RellenaVectorNormalPorNewell(){
         
             Cara* c; GLdouble x; GLdouble y; GLdouble z;
@@ -84,6 +88,10 @@ class Malla
 
         }// CalculoVectorNormalPorNewell                    
 
+//------------------------------------------------------------------------------
+                        /***** dibuja *****/
+//------------------------------------------------------------------------------
+        
         void dibuja(int modoN, int modoT){
  
             GLdouble normalX, normalY, normalZ;

@@ -144,7 +144,7 @@ class RollerCoaster : public Malla
                         /***** hazMatriz *****/
 //------------------------------------------------------------------------------
 
-        Lista<PV3D*>* hazMatriz(GLfloat t, GLfloat r){
+        /*Lista<PV3D*>* hazMatriz(GLfloat t, GLfloat r){
 
             Lista<PV3D*>* matriz = new Lista<PV3D*>();
 
@@ -155,49 +155,53 @@ class RollerCoaster : public Malla
 
             matriz->ponElem(n); matriz->ponElem(b); matriz->ponElem(tM); matriz->ponElem(c);
             return matriz;
-        }
+        }*/
 
 //------------------------------------------------------------------------------
                         /***** hazMatriz *****/
 //------------------------------------------------------------------------------
 
-        /*Lista<PV3D*>* hazMatriz(GLfloat t, GLfloat r){
+        Lista<PV3D*>* hazMatriz(GLfloat t, GLfloat r){
 
-        //C(t) = (3cos(t), 2cos(1,5t), 3sen(t));
-        //C'(t) = (-3sen(t), 3sen(1,5t), 3cos(t));
-        //C''(t) = (-3cos(t), -4,5cos(1,5t), -3sen(t))
+            //C(t) = (3cos(t), 2cos(1,5t), 3sen(t));
+            //C'(t) = (-3sen(t), 3sen(1,5t), 3cos(t));
+            //C''(t) = (-3cos(t), -4,5cos(1,5t), -3sen(t))
 
-        //M(t) = (N(t), B(t), T(t), C(t))
-        //       ( 0  ,  0  ,  0  ,  1  )
+            //M(t) = (N(t), B(t), T(t), C(t))
+            //       ( 0  ,  0  ,  0  ,  1  )
 
-        PV3D* c = new PV3D(3*cos(t)*2, 2*cos(1.5*t)*2, 3*sin(t)*2,1);
-        PV3D* cPrima = new PV3D (-3*sin(t)*2, 3*sin(1.5*t)*2, 3*cos(t)*2,1);
-        PV3D* cPrimaPrima = new PV3D (-3*cos(t)*2, -4.5*cos(1.5*t)*2, -3*sin(t)*2,1);
+            /*PV3D* c = new PV3D(3*cos(t)*2, 2*cos(1.5*t)*2, 3*sin(t)*2,1);
+            PV3D* cPrima = new PV3D (-3*sin(t)*2, 3*sin(1.5*t)*2, 3*cos(t)*2,1);
+            PV3D* cPrimaPrima = new PV3D (-3*cos(t)*2, -4.5*cos(1.5*t)*2, -3*sin(t)*2,1);*/
 
-        //T(t) = C'(t) normalizado
-        PV3D* tM = new PV3D(cPrima->getX(),cPrima->getY(),cPrima->getZ(), cPrima->getW());
-        tM->normaliza();
+            PV3D* c = new PV3D(3*cos(t)*2, 2*cos(1.5*t)*2, 3*sin(t)*2,1);
+            PV3D* cPrima = new PV3D (-3*sin(t)*2, -2*sin(1.5*t)*2, 3*cos(t)*2,1);
+            PV3D* cPrimaPrima = new PV3D (-3*cos(t)*2, -2*cos(1.5*t)*2, -3*sin(t)*2,1);
 
-        //B(t)= C'(t) x C''(t)
-        PV3D* b = cPrima-> productoVectorial(cPrimaPrima);    
-        b->normaliza();
-        //PV3D* p = cPrimaPrima->productoVectorial(cPrima);
+            //T(t) = C'(t) normalizado
+            PV3D* tM = new PV3D(cPrima->getX(),cPrima->getY(),cPrima->getZ(), cPrima->getW());
+            tM->normaliza();
 
-         //N(t)= B(x) x T(x)
-         PV3D* n = b->productoVectorial(tM);
-         n->normaliza();
+            //B(t)= C'(t) x C''(t)
+            PV3D* b = cPrima-> productoVectorial(cPrimaPrima);    
+            b->normaliza();
+            //PV3D* p = cPrimaPrima->productoVectorial(cPrima);
 
-         PV3D* primeraFila = new PV3D(n->getX(), b->getX(), tM->getX(), c->getX());
-         PV3D* segundaFila = new PV3D(n->getY(), b->getY(), tM->getY(), c->getY());
-         PV3D* terceraFila = new PV3D(n->getZ(), b->getZ(), tM->getZ(), c->getZ());
-         PV3D* cuartaFila  = new PV3D(0, 0, 0, 1);
+            //N(t)= B(x) x T(x)
+            PV3D* n = b->productoVectorial(tM);
+            n->normaliza();
 
-         delete n; delete b; delete tM; delete c; delete cPrima; delete cPrimaPrima;
+            PV3D* primeraFila = new PV3D(n->getX(), b->getX(), tM->getX(), c->getX());
+            PV3D* segundaFila = new PV3D(n->getY(), b->getY(), tM->getY(), c->getY());
+            PV3D* terceraFila = new PV3D(n->getZ(), b->getZ(), tM->getZ(), c->getZ());
+            PV3D* cuartaFila  = new PV3D(0, 0, 0, 1);
 
-         Lista<PV3D*>* matriz = new Lista<PV3D*>();
-         matriz->ponElem(primeraFila); matriz->ponElem(segundaFila); matriz->ponElem(terceraFila); matriz->ponElem(cuartaFila);
-         return matriz;
-        }*/
+            delete n; delete b; delete tM; delete c; delete cPrima; delete cPrimaPrima;
+
+            Lista<PV3D*>* matriz = new Lista<PV3D*>();
+            matriz->ponElem(primeraFila); matriz->ponElem(segundaFila); matriz->ponElem(terceraFila); matriz->ponElem(cuartaFila);
+            return matriz;
+        }
 
 //------------------------------------------------------------------------------
                         /***** dibujaRoller *****/
