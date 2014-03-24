@@ -64,40 +64,23 @@ class Coche : public Malla
 
         void calculaVertices(){
 
-            /*int radio = 1; GLdouble x, y, z;
-            float t; double inc; Lista<PV3D*>* matriz;
-            for(int valor=0; valor<numRodajas; valor++){
-
-                float angulo = 360 /25;
-                angulo = M_PI * angulo / 180;
-                t = valor* angulo;
-                //t = (2* M_PI * valor) / numRodajas;
-                matriz = hazMatriz(t,7);
-                inc = (2*PI/numLados);
-                for(int i=0; i<numLados; i++){
-                    x = radio*cos(2*PI-i*inc);
-                    y = radio*sin(2*PI-i*inc);
-                    z = 0;
-                    PV3D* nodo = new PV3D(x, y, z, 1);
-                    PV3D* res = multiplicaMatrices(matriz, nodo);
-                    vertices->ponElem(res);
-                    delete nodo;
-                }
-                delete matriz;
-            } */
-
+             Lista<PV3D*>* matriz = hazMatriz(0,7);
             double inc=(2*PI/numLados);
             for(int i=0; i<numLados; i++){
-                PV3D* nodo = new PV3D(   cos(2*PI-i*inc) , 0 , sin(2*PI-i*inc),1);
-                vertices->ponElem(nodo);
-                //glVertex3d(  radioC*sin(2*PI-i*inc) ,  0 , radioC*cos(2*PI-i*inc));
+                PV3D* nodo = new PV3D(   cos(2*PI-i*inc)*0.7  , sin(2*PI-i*inc)*0.7  , 0  ,1);
+                PV3D* res = multiplicaMatrices(matriz, nodo);
+                vertices->ponElem(res);
+                delete nodo;
             }
 
              for(int i=0; i<numLados; i++){
-                PV3D* nodo = new PV3D(   cos(2*PI-i*inc) +1 , 0 , sin(2*PI-i*inc) +1,1) ;
-                vertices->ponElem(nodo);
-                //glVertex3d(  radioC*sin(2*PI-i*inc) ,  0 , radioC*cos(2*PI-i*inc));
+                PV3D* nodo = new PV3D(   cos(2*PI-i*inc)*0.7  , sin(2*PI-i*inc)*0.7  +0.7  , 0 ,1) ;
+                PV3D* res = multiplicaMatrices(matriz, nodo);
+                vertices->ponElem(res);
+                delete nodo;
             }
+
+            delete matriz;
         }
 
 //------------------------------------------------------------------------------
@@ -217,7 +200,7 @@ class Coche : public Malla
 
         void dibujaCoche(){
         
-            dibuja(0,1);
+            dibuja(0,0);
 
             /*Color3d(0,1,0);
             glLineWidth(1.0);
@@ -225,11 +208,32 @@ class Coche : public Malla
                 for(int i =0 ; i<vertices->numElem(); i++)
                         glVertex3d(vertices->iesimo(i)->getX(), vertices->iesimo(i)->getY(), vertices->iesimo(i)->getZ());
             glEnd(); */
+
+            //Dibujamos las tapas del coche
+            glMatrixMode(GL_MODELVIEW);
+            glPushMatrix();
+            glRotatef(anguloX, 1.0, 0.0, 0.0);
+            glRotatef(anguloY, 0.0, 1.0, 0.0);
+            glRotatef(anguloZ, 0.0, 0.0, 1.0);
+            glColor3d(1,1,0);
+            glLineWidth(1.0);
+
+            glBegin(GL_POLYGON);
+                for(int i =0 ; i<4; i++)
+                        glVertex3d(vertices->iesimo(i)->getX(), vertices->iesimo(i)->getY(), vertices->iesimo(i)->getZ());
+            glEnd();
+
+            glBegin(GL_POLYGON);
+                for(int i =4 ; i<8; i++)
+                        glVertex3d(vertices->iesimo(i)->getX(), vertices->iesimo(i)->getY(), vertices->iesimo(i)->getZ());
+            glEnd();
+
+            glPopMatrix();
         }
 
 
 //------------------------------------------------------------------------------
-                        /***** rotaRoller *****/
+                        /***** rotaCoche *****/
 //------------------------------------------------------------------------------
 
         void rotaCoche(tipo){
