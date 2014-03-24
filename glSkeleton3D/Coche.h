@@ -94,7 +94,7 @@ class Coche : public Malla
             }
 
              for(int i=0; i<numLados; i++){
-                PV3D* nodo = new PV3D(   cos(2*PI-i*inc)*0.7  , sin(2*PI-i*inc)*0.7   , 0 +0.7 ,1) ;
+                PV3D* nodo = new PV3D(   cos(2*PI-i*inc)*0.7  , sin(2*PI-i*inc)*0.7   , 0 +1 ,1) ;
                 PV3D* res = multiplicaMatrices(matriz, nodo);
                 vertices->ponElem(res);
                 delete nodo;
@@ -246,6 +246,14 @@ class Coche : public Malla
             glEnd();
 
             glPopMatrix();
+
+
+            dibujaRuedas(0);
+            dibujaRuedas(3);
+            dibujaRuedas(4);
+            dibujaRuedas(7);
+
+
         }
 
 
@@ -297,8 +305,34 @@ class Coche : public Malla
 
            //Llamamos a newell para calcular las normales
            RellenaVectorNormalPorNewell();
+
            
         }
+
+       void dibujaRuedas(int vertice){
+
+
+        glMatrixMode(GL_MODELVIEW);
+            glPushMatrix();
+            GLUquadricObj* cilindro = gluNewQuadric();
+            glTranslated(vertices->iesimo(vertice)->getX(), vertices->iesimo(vertice)->getY(), vertices->iesimo(vertice)->getZ());
+            glColor3d(0,0,0);
+            gluCylinder(cilindro, 0.2, 0.2, 0.2, 10, 1);
+            glPopMatrix();
+
+
+            glMatrixMode(GL_MODELVIEW);
+            glPushMatrix();
+            GLUquadricObj* tapa = gluNewQuadric();
+            gluQuadricDrawStyle(tapa,GLU_FILL);
+
+            glTranslated(vertices->iesimo(vertice)->getX() , vertices->iesimo(vertice)->getY(), vertices->iesimo(vertice)->getZ()+0.2);
+            glColor3d(0,0,0);
+            gluDisk(tapa, 0,0.2,32 ,32);
+            glPopMatrix();
+
+
+       }
 
 };
 

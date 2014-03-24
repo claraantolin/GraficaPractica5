@@ -68,7 +68,7 @@ class RollerCoaster : public Malla
             float t; double inc; Lista<PV3D*>* matriz;
             for(int valor=0; valor<numRodajas; valor++){
 
-                float angulo = 360 /30;
+                float angulo = 360 /15;
                 angulo = M_PI * angulo / 180;
                 t = valor* angulo;
                 //t = (2* M_PI * valor) / numRodajas;
