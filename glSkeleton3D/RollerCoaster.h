@@ -175,8 +175,8 @@ class RollerCoaster : public Malla
             PV3D* cPrimaPrima = new PV3D (-3*cos(t)*2, -4.5*cos(1.5*t)*2, -3*sin(t)*2,1);*/
 
             PV3D* c = new PV3D(3*cos(t)*2, 2*cos(1.5*t)*2, 3*sin(t)*2,1);
-            PV3D* cPrima = new PV3D (-3*sin(t)*2, -2*sin(1.5*t)*2, 3*cos(t)*2,1);
-            PV3D* cPrimaPrima = new PV3D (-3*cos(t)*2, -2*cos(1.5*t)*2, -3*sin(t)*2,1);
+            PV3D* cPrima = new PV3D (-3*sin(t)*2, -3*sin(1.5*t)*2, 3*cos(t)*2,1);
+            PV3D* cPrimaPrima = new PV3D (-3*cos(t)*2, -4.5 *cos(1.5*t)*2, -3*sin(t)*2,1);
 
             //T(t) = C'(t) normalizado
             PV3D* tM = new PV3D(cPrima->getX(),cPrima->getY(),cPrima->getZ(), cPrima->getW());
