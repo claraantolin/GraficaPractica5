@@ -6,8 +6,8 @@
 //                                //
 //********************************//
 
-#ifndef RollerCoasterH
-#define RollerCoasterH
+#ifndef CocheH
+#define CocheH
 
 #include <gl\gl.h>
 #include <gl\glu.h>
@@ -18,7 +18,7 @@
 #include "Lista.h"
 #include "Cara.h"
 //---------------------------------------------------------------------------
-class RollerCoaster : public Malla
+class Coche : public Malla
 {
    private:
 
@@ -27,9 +27,9 @@ class RollerCoaster : public Malla
 
    public:
 
-        RollerCoaster();
-        RollerCoaster(int nlados, int nRodajas):Malla(0,new Lista<PV3D*>(), 0, new Lista<PV3D*>(), 0, new Lista<Cara*>()){
-            
+        Coche();
+        Coche(int nlados, int nRodajas):Malla(0,new Lista<PV3D*>(), 0, new Lista<PV3D*>(), 0, new Lista<Cara*>()){
+
             // Damos valor a nuestros atributos
             numLados = nlados;
             numRodajas = nRodajas;
@@ -45,7 +45,7 @@ class RollerCoaster : public Malla
             RellenaVectorNormalPorNewell();
         }
         
-        ~RollerCoaster(){
+        ~Coche(){
             numLados = 0;
             numRodajas = 0;          
         };
@@ -200,40 +200,14 @@ class RollerCoaster : public Malla
         } */
 
 //------------------------------------------------------------------------------
-                        /***** dibujaRoller *****/
+                        /***** dibujaCoche *****/
 //------------------------------------------------------------------------------
 
-        void dibujaRoller(){
+        void dibujaCoche(){
             dibuja();
         }
 
-//------------------------------------------------------------------------------
-                        /***** rotaRoller *****/
-//------------------------------------------------------------------------------
 
-        void rotaRoller(int tipo){
-            switch(tipo){
-                case 0:
-                    anguloY -= 10.0f;
-                    break;
-                case 1:
-                    anguloY += 10.0f;
-                    break;
-                case 2:
-                    anguloX -= 10.0f;
-                    break;
-                case 3:
-                    anguloX += 10.0f;
-                    break;
-                case 4:
-                    anguloZ -= 10.0f;
-                    break;
-                case 5:
-                    anguloZ += 10.0f;
-                    break;
-                default: break;
-            }
-        }
 
 //------------------------------------------------------------------------------
 

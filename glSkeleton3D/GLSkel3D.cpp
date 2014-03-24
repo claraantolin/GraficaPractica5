@@ -224,7 +224,7 @@ void __fastcall TGLForm3D::GLScene() {
     */
 
     // CURVA
-    /*for(int valor=0; valor<15; valor++){
+    for(int valor=0; valor<15; valor++){
         glColor4d(1,1,1, 1.0);
         glBegin(GL_POINTS);
         for(int t=0; t<1000; t++){
@@ -232,17 +232,12 @@ void __fastcall TGLForm3D::GLScene() {
                 glVertex3d(7*cos(t), 0, 7*sin(t)); // Curva
         }
         glEnd();
-    } */
+    }
     
-    rollerCoaster->dibujaRoller();
+    //rollerCoaster->dibujaRoller();
 
-        glColor4d(0,0,0, 1.0);
-        glBegin(GL_POINTS);
-        for(int t=0; t<1000; t++){
-                //glVertex3d(3*cos(t), 2 * cos(1.5*t), 3*sin(t)); // Montaña rusa
-                glVertex3d(3*cos(t)*2, 2*cos(1.5*t)*2, 3*sin(t)*2); // Curva
-        }
-        glEnd();
+
+    coche->dibujaCoche();
 
     //Dibujo de la esfera blanca
     /*glColor3d(1.0, 1.0, 1.0);
@@ -272,7 +267,8 @@ void __fastcall TGLForm3D::FormDestroy(TObject *Sender) {
 
 void TGLForm3D::crearObjetosEscena() {
     esfera = gluNewQuadric();
-    rollerCoaster = new RollerCoaster(50,50);
+    rollerCoaster = new RollerCoaster(10,25);
+    coche = new Coche(10,25);
 }
 
 //---------------------------------------------------------------------------
@@ -280,6 +276,7 @@ void TGLForm3D::crearObjetosEscena() {
 void TGLForm3D::liberarObjetosEscena() {
     gluDeleteQuadric(esfera);
     delete rollerCoaster;
+    delete coche;
 }
 
 //---------------------------------------------------------------------------

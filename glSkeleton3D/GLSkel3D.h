@@ -15,6 +15,7 @@
 #include "Cara.h"
 #include "Lista.h"
 #include "RollerCoaster.h"
+#include "Coche.h"
 
 //---------------------------------------------------------------------------
 class TGLForm3D : public TForm
@@ -35,6 +36,7 @@ private:        //User declarations
     GLUquadricObj* esfera;  //Esfera inicial de la escena
     RollerCoaster* rollerCoaster;
     Malla* malla;
+    Coche* coche;
     
     void __fastcall SetPixelFormatDescriptor();
     void __fastcall GLScene();
