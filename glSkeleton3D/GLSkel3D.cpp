@@ -235,7 +235,7 @@ void __fastcall TGLForm3D::GLScene() {
 
     }*/
     
-    rollerCoaster->dibujaRoller(modo);
+    rollerCoaster->dibujaRoller(modoNormales, modoTransparencia);
 
 
     //coche->dibujaCoche();
@@ -268,9 +268,10 @@ void __fastcall TGLForm3D::FormDestroy(TObject *Sender) {
 
 void TGLForm3D::crearObjetosEscena() {
     esfera = gluNewQuadric();
-    rollerCoaster = new RollerCoaster(10,25);
+    rollerCoaster = new RollerCoaster(4,25);
     coche = new Coche(10,25);
-    modo = 0;
+    modoNormales = 0;
+    modoTransparencia = 1;
 }
 
 //---------------------------------------------------------------------------
@@ -289,6 +290,7 @@ void __fastcall TGLForm3D::FormKeyPress(TObject *Sender, char &Key)
 {
 
     switch(Key){
+
         // Rotacion con respecto al eje y (verde)
         case '8':   // Sentido de las agujas del rejor
             rollerCoaster->rotaRoller(0);
@@ -296,6 +298,7 @@ void __fastcall TGLForm3D::FormKeyPress(TObject *Sender, char &Key)
         case '2':   // Contrario a las agujas del reloj
             rollerCoaster->rotaRoller(1);
             break;
+        
         // Rotacion con respecto al eje x (rojo)
         case '6':
             rollerCoaster->rotaRoller(2);
@@ -303,6 +306,7 @@ void __fastcall TGLForm3D::FormKeyPress(TObject *Sender, char &Key)
         case '4':
             rollerCoaster->rotaRoller(3);
             break;
+        
         // Rotacion con respecto al eje z (azul)
         case 'a':
             rollerCoaster->rotaRoller(4);
@@ -310,11 +314,29 @@ void __fastcall TGLForm3D::FormKeyPress(TObject *Sender, char &Key)
         case 'z':
             rollerCoaster->rotaRoller(5);
             break;
-        case 'j':   // Se muestran las normales
-            modo = 1;
+        
+        // Mostrar la montaña rusa en forma de malla o de armazon
+        case 'g':   // Se dibuja el armazon
+            modoTransparencia = 0;
             break;
+        case 'h':   // Se dibujan las rayas
+            modoTransparencia = 1;
+            break;
+
+        // Teclas para mostrar o no las normales
         case 'k':   // Se ocultan las normales
-            modo = 0;
+            modoNormales = 0;
+            break;
+
+        // Pruebas para mostrar las normales
+        case 'q':
+            modoNormales = 1;
+            break;
+        case 'w':
+            modoNormales = 2;
+            break;
+        case 'e':
+            modoNormales = 3;
             break;
         
         default:

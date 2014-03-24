@@ -203,8 +203,8 @@ class RollerCoaster : public Malla
                         /***** dibujaRoller *****/
 //------------------------------------------------------------------------------
 
-        void dibujaRoller(int modo){
-            dibuja(modo);
+        void dibujaRoller(int modoN, int modoT){
+            dibuja(modoN, modoT);
         }
 
 //------------------------------------------------------------------------------

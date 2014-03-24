@@ -37,7 +37,8 @@ private:        //User declarations
     RollerCoaster* rollerCoaster;
     Malla* malla;
     Coche* coche;
-    int modo;   // si es 0 no se dibujan las normales, si es 1 se dibujan las normales
+    int modoNormales;   // si es 0 no se dibujan las normales, si es 1 se dibujan las normales
+    int modoTransparencia;   // si es 0 no se dibujan el armazón, si es 1 se dibuja las rayas
     
     void __fastcall SetPixelFormatDescriptor();
     void __fastcall GLScene();

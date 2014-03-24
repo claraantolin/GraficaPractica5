@@ -84,23 +84,27 @@ class Malla
 
         }// CalculoVectorNormalPorNewell                    
 
-        void dibuja(int modo){
- 
+        void dibuja(int modoN, int modoT){
  
             GLdouble normalX, normalY, normalZ;
             GLdouble verticeX, verticeY, verticeZ;
- 
+            // Dibuja con la rotacion dada por los angulos
+            glMatrixMode(GL_MODELVIEW);
+            glPushMatrix();
+            glRotatef(anguloX, 1.0, 0.0, 0.0);
+            glRotatef(anguloY, 0.0, 1.0, 0.0);
+            glRotatef(anguloZ, 0.0, 0.0, 1.0);
+
             for (int i = 0; i < numCaras; i++) {
-                 
-                /*glColor3d(0,3,0);
-                glLineWidth(1.0);
-                glBegin(GL_LINE_LOOP);*/
-              
+                               
                 for (int j = 0; j < caras->iesimo(i)->getNumVertices(); j++) {
                   
                     glColor3d(0,3,0);
                     glLineWidth(1.0);
-                    glBegin(GL_LINE_LOOP);
+                    if(modoT == 0)
+                        glBegin(GL_POLYGON);
+                    else
+                        glBegin(GL_LINE_LOOP);
 
                     for (int j = 0; j < caras->iesimo(i)-> getNumVertices(); j++) {
                          
@@ -124,76 +128,35 @@ class Malla
                         // Pintamos cada vertice
                         glVertex3d(verticeX,verticeY,verticeZ);
 
-                        // pintamos cada normal
-                        if(modo == 1){
+                        
+                        // pintamos cada normal, Lo hacemos asi para no poner 4 normales por cada cara
+                        if((modoN == 1) && (j == 0)){
+                            glLineWidth(1.0);
+                            glBegin(GL_LINE_LOOP);
+                                glColor3d(3,3,3);
+                                glVertex3d(normalX,normalY,normalZ);
+                            glEnd();
+                        }else if((modoN == 2) && (j == 0)){
                             glLineWidth(1.0);
                             glBegin(GL_LINE);
                                 glColor3d(3,3,3);
-                                glVertex3d(-normalX,-normalY,-normalZ);
+                                glVertex3d(normalX,normalY,normalZ);
                             glEnd();
+                        }else if((modoN == 3) && (j == 0)){
+                            glColor3d(3,3,3);
+                            glVertex3d(normalX,normalY,normalZ);
                         }
+                        
+                        
                     }
                     glEnd();
-
-                    // Lo hacemos fuera del for para no poner 4 normales por cada cara
-                    /*glColor3d(0,3,0);
-                    glLineWidth(1.0);
-                    glBegin(GL_LINE_LOOP);
-                        glColor3d(3,3,3);
-                        glVertex3d(normalX,normalY,normalZ);
-                    glEnd();*/
+                   
                 }
-            }
-
-        }// Dibuja
-
-        /*void dibuja(){
-        
-            GLdouble normalX, normalY, normalZ;
-            GLdouble verticeX, verticeY, verticeZ;
-
-            // Dibuja con la rotacion dada por los angulos
-            glMatrixMode(GL_MODELVIEW);
-            glPushMatrix();
-            glRotatef(anguloX, 1.0, 0.0, 0.0);
-            glRotatef(anguloY, 0.0, 1.0, 0.0);
-            glRotatef(anguloZ, 0.0, 0.0, 1.0);
-
-            for (int i = 0; i < numCaras; i++) {
-
-                //glColor3d(0,1,0);
-                glLineWidth(1.0);
-                glBegin(GL_LINE_LOOP);
-                    
-                    int iN = caras->iesimo(i)-> getIndiceNormal();
-
-                    normalX = normales->iesimo(iN)->getX();
-                    normalY = normales->iesimo(iN)->getY();
-                    normalZ = normales->iesimo(iN)->getZ();
-
-                    glColor3d(3,3,3);
-                    glVertex3d(normalX,normalY,normalZ);
-                    
-                    for (int j = 0; j < caras->iesimo(i)->getNumVertices(); j++) {
-
-                        int iV = caras->iesimo(i)-> getIndiceVertice(j);
-
-                        //Si hubiera coordenadas de textura, aqui se suministrarian
-                        //las coordenadas de textura del vertice j con glTexCoor2f(...);
-
-                        verticeX = vertices->iesimo(iV)->getX();
-                        verticeY = vertices->iesimo(iV)->getY();
-                        verticeZ = vertices->iesimo(iV)->getZ();
-
-                        glColor3d(0,3,0);
-                        glVertex3d(verticeX,verticeY,verticeZ);
-                    }
-                glEnd();
             }
 
             glPopMatrix();
 
-        }// Dibuja*/
+        }// Dibuja
 };
 
 #endif
