@@ -123,11 +123,10 @@ class Malla
                     }
                 }
             }
-            else
 
             for (int i = 0; i < numCaras; i++) {
                                      
-                    //glLineWidth(1.0);
+                    glLineWidth(1.0);
                     if(modoT == 0)
                         glBegin(GL_POLYGON);
                     else
@@ -155,16 +154,6 @@ class Malla
                         // Pintamos cada vertice
                         glColor3d(1,1,0);
                         glVertex3d(verticeX,verticeY,verticeZ);
-
-                        // pintamos cada normal, lo hacemos asi para no poner 4 normales por cada cara
-                        /*if((modoN == 1) && (j == 3)){
-
-                            glBegin(GL_LINE_LOOP);
-                            glColor3d(3,3,3);
-                                //glVertex3d(verticeXAux-normalX,verticeYAux-normalY,verticeZAux-normalZ);
-                                glVertex3d(verticeX-normalX,verticeY-normalY,verticeZ-normalZ);
-                            glEnd();
-                        }*/
 
                     } // for 2
 
