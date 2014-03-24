@@ -25,7 +25,7 @@ class RollerCoaster : public Malla
         int numLados;
         int numRodajas;
 
-   public:
+   public:                               
 
         RollerCoaster();
         RollerCoaster(int nlados, int nRodajas):Malla(0,new Lista<PV3D*>(), 0, new Lista<PV3D*>(), 0, new Lista<Cara*>()){
