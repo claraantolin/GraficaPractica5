@@ -232,7 +232,7 @@ class Coche : public Malla
             glRotatef(anguloX, 1.0, 0.0, 0.0);
             glRotatef(anguloY, 0.0, 1.0, 0.0);
             glRotatef(anguloZ, 0.0, 0.0, 1.0);
-            glColor3d(0,0,1);
+            glColor3d(colorR,colorG,colorB);
             glLineWidth(1.0);
 
             glBegin(GL_POLYGON);

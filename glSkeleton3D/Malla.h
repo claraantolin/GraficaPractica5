@@ -28,6 +28,7 @@ class Malla
         Lista<Cara*>* caras;
 
         GLdouble anguloX, anguloY, anguloZ;
+        GLdouble colorR, colorG, colorB;
 
    public:
         
@@ -37,6 +38,7 @@ class Malla
             numNormales = numN;  normales = n;
             numCaras = numC;     caras = c;
             anguloX = 0.0f; anguloY = 0.0f; anguloZ = 0.0f;
+            colorR = 0; colorG = 0; colorB = 1.0;
         };
         
         ~Malla(){
@@ -52,8 +54,21 @@ class Malla
             anguloX = 0;
             anguloY = 0;
             anguloZ = 0;
+
+            colorR = 0;
+            colorG = 0;
+            colorB = 0;
             
-        }; 
+        };
+
+ //------------------------------------------------------------------------------
+                        /***** SEtters *****/
+//------------------------------------------------------------------------------
+
+        void setColor(GLdouble r, GLdouble g, GLdouble b){
+             colorR = r; colorG = g; colorB = b;
+        }
+
 
 //------------------------------------------------------------------------------
                         /***** RellenaVectorNormalPorNewell *****/
@@ -133,7 +148,7 @@ class Malla
                         verticeZ = vertices->iesimo(iV)->getZ();
 
                         // Pintamos cada vertice
-                        glColor3d(0,0,1);
+                        glColor3d(colorR,colorG,colorB);
                         glVertex3d(verticeX,verticeY,verticeZ);
 
                     } // for 2
