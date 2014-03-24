@@ -238,7 +238,7 @@ void __fastcall TGLForm3D::GLScene() {
     rollerCoaster->dibujaRoller(modoNormales, modoTransparencia);
 
 
-    coche->dibujaCoche();
+    //coche->dibujaCoche();
 
     //Dibujo de la esfera blanca
     /*glColor3d(1.0, 1.0, 1.0);
@@ -294,25 +294,31 @@ void __fastcall TGLForm3D::FormKeyPress(TObject *Sender, char &Key)
         // Rotacion con respecto al eje y (verde)
         case '8':   // Sentido de las agujas del rejor
             rollerCoaster->rotaRoller(0);
+            coche->rotaCoche(0);
             break;
         case '2':   // Contrario a las agujas del reloj
             rollerCoaster->rotaRoller(1);
+            coche->rotaCoche(1);
             break;
         
         // Rotacion con respecto al eje x (rojo)
         case '6':
             rollerCoaster->rotaRoller(2);
+            coche->rotaCoche(2);
             break;
         case '4':
             rollerCoaster->rotaRoller(3);
+            coche->rotaCoche(3);
             break;
         
         // Rotacion con respecto al eje z (azul)
         case 'a':
             rollerCoaster->rotaRoller(4);
+            coche->rotaCoche(4);
             break;
         case 'z':
             rollerCoaster->rotaRoller(5);
+            coche->rotaCoche(5);
             break;
         
         // Mostrar la montaña rusa en forma de malla o de armazon
