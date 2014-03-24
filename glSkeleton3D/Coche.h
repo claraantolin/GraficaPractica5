@@ -66,13 +66,13 @@ class Coche : public Malla
 
         void incrementaPos(){
                 pos++;
-                pos = pos % 60;
+                //pos = pos % 15;
                 mueveCoche();
         }
 
         void decrementaPos(){
                 pos--;
-                pos = pos % 60;
+                //pos = pos % 60;
                 mueveCoche();
         }
 
