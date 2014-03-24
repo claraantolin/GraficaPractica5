@@ -29,6 +29,7 @@ class Cara
         ~Cara(){ delete arrayVN; numVertices = 0; }
         int getNumVertices(){ return numVertices; }
         Lista<VerticeNormal*>* getArrayVN(){ return arrayVN; }
+        int getIndiceNormal(){ return arrayVN->iesimo(0)->getVerticeNormal(); }
         int getIndiceNormal(int k){ return arrayVN->iesimo(k)->getVerticeNormal(); }
         int getIndiceVertice(int k){ return arrayVN->iesimo(k)->getVerticeVertice(); }
         void setNumVertices(int numV){ numVertices = numV; }

@@ -224,7 +224,7 @@ void __fastcall TGLForm3D::GLScene() {
     */
 
     // CURVA
-    for(int valor=0; valor<15; valor++){
+    /*for(int valor=0; valor<15; valor++){
         glColor4d(1,1,1, 1.0);
         glBegin(GL_POINTS);
         for(int t=0; t<1000; t++){
@@ -232,7 +232,9 @@ void __fastcall TGLForm3D::GLScene() {
                 glVertex3d(7*cos(t), 0, 7*sin(t)); // Curva
         }
         glEnd();
-    }
+
+    }*/
+
 
     rollerCoaster->dibujaRoller();
 

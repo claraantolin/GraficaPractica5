@@ -89,8 +89,8 @@ class Malla
             GLdouble normalX, normalY, normalZ;
             GLdouble verticeX, verticeY, verticeZ;
 
+            // Dibuja con la rotacion dada por los angulos
             glMatrixMode(GL_MODELVIEW);
-            //glLoadIdentity();
             glPushMatrix();
             glRotatef(anguloX, 1.0, 0.0, 0.0);
             glRotatef(anguloY, 0.0, 1.0, 0.0);
@@ -98,21 +98,25 @@ class Malla
 
             for (int i = 0; i < numCaras; i++) {
 
-                glColor3d(0,1,0);
+                //glColor3d(0,1,0);
                 glLineWidth(1.0);
                 glBegin(GL_LINE_LOOP);
 
+                    int iN = caras->iesimo(i)-> getIndiceNormal();
+
+                    normalX = normales->iesimo(iN)->getX();
+                    normalY = normales->iesimo(iN)->getY();
+                    normalZ = normales->iesimo(iN)->getZ();
+
+                    glColor3d(3,3,3);
+                    glVertex3d(normalX,normalY,normalZ);
+
                     for (int j = 0; j < caras->iesimo(i)->getNumVertices(); j++) {
 
-                        int iN = caras->iesimo(i)-> getIndiceNormal(j);
+
+
                         int iV = caras->iesimo(i)-> getIndiceVertice(j);
 
-                        normalX = normales->iesimo(iN)->getX();
-                        normalY = normales->iesimo(iN)->getY();
-                        normalZ = normales->iesimo(iN)->getZ();
-
-                        glNormal3d(normalX,normalY,normalZ);
-                        
                         //Si hubiera coordenadas de textura, aqui se suministrarian
                         //las coordenadas de textura del vertice j con glTexCoor2f(...);
 
@@ -120,10 +124,12 @@ class Malla
                         verticeY = vertices->iesimo(iV)->getY();
                         verticeZ = vertices->iesimo(iV)->getZ();
 
+                        glColor3d(0,3,0);
                         glVertex3d(verticeX,verticeY,verticeZ);
                     }
                 glEnd();
             }
+
             glPopMatrix();
 
         }// Dibuja
