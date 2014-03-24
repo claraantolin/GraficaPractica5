@@ -31,18 +31,18 @@ class Coche : public Malla
         Coche(int nlados, int nRodajas):Malla(0,new Lista<PV3D*>(), 0, new Lista<PV3D*>(), 0, new Lista<Cara*>()){
 
             // Damos valor a nuestros atributos
-            numLados = nlados;
-            numRodajas = nRodajas;
+            numLados = 4;
+            numRodajas = 2;
 
             // Damos valor a los atributos de la malla
             numVertices = nlados * nRodajas;
             calculaVertices();
             numNormales = numVertices; //=numCaras, frecuentemente
-            numCaras = numVertices;
-            calculaCaras();
+            //numCaras = numVertices;
+            //calculaCaras();
 
             //Llamamos a newell para calcular las normales
-            RellenaVectorNormalPorNewell();
+            //RellenaVectorNormalPorNewell();
         }
         
         ~Coche(){
@@ -64,7 +64,7 @@ class Coche : public Malla
 
         void calculaVertices(){
 
-            int radio = 1; GLdouble x, y, z;
+            /*int radio = 1; GLdouble x, y, z;
             float t; double inc; Lista<PV3D*>* matriz;
             for(int valor=0; valor<numRodajas; valor++){
 
@@ -74,7 +74,6 @@ class Coche : public Malla
                 //t = (2* M_PI * valor) / numRodajas;
                 matriz = hazMatriz(t,7);
                 inc = (2*PI/numLados);
-
                 for(int i=0; i<numLados; i++){
                     x = radio*cos(2*PI-i*inc);
                     y = radio*sin(2*PI-i*inc);
@@ -85,6 +84,19 @@ class Coche : public Malla
                     delete nodo;
                 }
                 delete matriz;
+            } */
+
+            double inc=(2*PI/numLados);
+            for(int i=0; i<numLados; i++){
+                PV3D* nodo = new PV3D(   cos(2*PI-i*inc) , 0 , sin(2*PI-i*inc),1);
+                vertices->ponElem(nodo);
+                //glVertex3d(  radioC*sin(2*PI-i*inc) ,  0 , radioC*cos(2*PI-i*inc));
+            }
+
+             for(int i=0; i<numLados; i++){
+                PV3D* nodo = new PV3D(   cos(2*PI-i*inc) +1 , 0 , sin(2*PI-i*inc) +1,1) ;
+                vertices->ponElem(nodo);
+                //glVertex3d(  radioC*sin(2*PI-i*inc) ,  0 , radioC*cos(2*PI-i*inc));
             }
         }
 
@@ -204,7 +216,14 @@ class Coche : public Malla
 //------------------------------------------------------------------------------
 
         void dibujaCoche(){
-            dibuja();
+            //dibuja();
+
+            glColor3d(0,1,0);
+            glLineWidth(1.0);
+            glBegin(GL_LINE_LOOP);
+                for(int i =0 ; i<vertices->numElem(); i++)
+                        glVertex3d(vertices->iesimo(i)->getX(), vertices->iesimo(i)->getY(), vertices->iesimo(i)->getZ());
+            glEnd();
         }
 
 

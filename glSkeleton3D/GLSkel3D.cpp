@@ -233,11 +233,11 @@ void __fastcall TGLForm3D::GLScene() {
         }
         glEnd();
     }
-    
-    //rollerCoaster->dibujaRoller();
+
+    rollerCoaster->dibujaRoller();
 
 
-    coche->dibujaCoche();
+    //coche->dibujaCoche();
 
     //Dibujo de la esfera blanca
     /*glColor3d(1.0, 1.0, 1.0);
