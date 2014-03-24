@@ -84,7 +84,70 @@ class Malla
 
         }// CalculoVectorNormalPorNewell                    
 
-        void dibuja(){
+        void dibuja(int modo){
+ 
+ 
+            GLdouble normalX, normalY, normalZ;
+            GLdouble verticeX, verticeY, verticeZ;
+ 
+            for (int i = 0; i < numCaras; i++) {
+                 
+                /*glColor3d(0,3,0);
+                glLineWidth(1.0);
+                glBegin(GL_LINE_LOOP);*/
+              
+                for (int j = 0; j < caras->iesimo(i)->getNumVertices(); j++) {
+                  
+                    glColor3d(0,3,0);
+                    glLineWidth(1.0);
+                    glBegin(GL_LINE_LOOP);
+
+                    for (int j = 0; j < caras->iesimo(i)-> getNumVertices(); j++) {
+                         
+                        int iN = caras->iesimo(i)-> getIndiceNormal(j);
+                        int iV = caras->iesimo(i)-> getIndiceVertice(j);
+     
+                        normalX = normales->iesimo(iN)->getX();
+                        normalY = normales->iesimo(iN)->getY();
+                        normalZ = normales->iesimo(iN)->getZ();
+                        
+                        // Le asignamos una normal a cada vertice
+                        glNormal3d(normalX,normalY,normalZ);
+                             
+                        //Si hubiera coordenadas de textura, aqui se suministrarian
+                        //las coordenadas de textura del vertice j con glTexCoor2f(...);
+                     
+                        verticeX = vertices->iesimo(iV)->getX();
+                        verticeY = vertices->iesimo(iV)->getY();
+                        verticeZ = vertices->iesimo(iV)->getZ();
+
+                        // Pintamos cada vertice
+                        glVertex3d(verticeX,verticeY,verticeZ);
+
+                        // pintamos cada normal
+                        if(modo == 1){
+                            glLineWidth(1.0);
+                            glBegin(GL_LINE);
+                                glColor3d(3,3,3);
+                                glVertex3d(-normalX,-normalY,-normalZ);
+                            glEnd();
+                        }
+                    }
+                    glEnd();
+
+                    // Lo hacemos fuera del for para no poner 4 normales por cada cara
+                    /*glColor3d(0,3,0);
+                    glLineWidth(1.0);
+                    glBegin(GL_LINE_LOOP);
+                        glColor3d(3,3,3);
+                        glVertex3d(normalX,normalY,normalZ);
+                    glEnd();*/
+                }
+            }
+
+        }// Dibuja
+
+        /*void dibuja(){
         
             GLdouble normalX, normalY, normalZ;
             GLdouble verticeX, verticeY, verticeZ;
@@ -101,7 +164,7 @@ class Malla
                 //glColor3d(0,1,0);
                 glLineWidth(1.0);
                 glBegin(GL_LINE_LOOP);
-
+                    
                     int iN = caras->iesimo(i)-> getIndiceNormal();
 
                     normalX = normales->iesimo(iN)->getX();
@@ -110,10 +173,8 @@ class Malla
 
                     glColor3d(3,3,3);
                     glVertex3d(normalX,normalY,normalZ);
-
+                    
                     for (int j = 0; j < caras->iesimo(i)->getNumVertices(); j++) {
-
-
 
                         int iV = caras->iesimo(i)-> getIndiceVertice(j);
 
@@ -132,7 +193,7 @@ class Malla
 
             glPopMatrix();
 
-        }// Dibuja
+        }// Dibuja*/
 };
 
 #endif

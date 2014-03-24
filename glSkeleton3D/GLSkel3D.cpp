@@ -234,7 +234,7 @@ void __fastcall TGLForm3D::GLScene() {
         glEnd();
     }*/
     
-    rollerCoaster->dibujaRoller();
+    rollerCoaster->dibujaRoller(modo);
 
 
     //coche->dibujaCoche();
@@ -269,6 +269,7 @@ void TGLForm3D::crearObjetosEscena() {
     esfera = gluNewQuadric();
     rollerCoaster = new RollerCoaster(10,25);
     coche = new Coche(10,25);
+    modo = 0;
 }
 
 //---------------------------------------------------------------------------
@@ -307,6 +308,12 @@ void __fastcall TGLForm3D::FormKeyPress(TObject *Sender, char &Key)
             break;
         case 'z':
             rollerCoaster->rotaRoller(5);
+            break;
+        case 'j':   // Se muestran las normales
+            modo = 1;
+            break;
+        case 'k':   // Se ocultan las normales
+            modo = 0;
             break;
         
         default:

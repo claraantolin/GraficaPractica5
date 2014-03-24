@@ -204,7 +204,7 @@ class Coche : public Malla
 //------------------------------------------------------------------------------
 
         void dibujaCoche(){
-            dibuja();
+            dibuja(0);
         }
 
 
