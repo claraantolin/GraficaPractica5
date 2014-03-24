@@ -232,6 +232,7 @@ void __fastcall TGLForm3D::GLScene() {
                 glVertex3d(7*cos(t), 0, 7*sin(t)); // Curva
         }
         glEnd();
+
     }*/
     
     rollerCoaster->dibujaRoller(modo);
