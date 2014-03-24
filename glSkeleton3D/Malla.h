@@ -88,6 +88,7 @@ class Malla
  
             GLdouble normalX, normalY, normalZ;
             GLdouble verticeX, verticeY, verticeZ;
+            
             // Dibuja con la rotacion dada por los angulos
             glMatrixMode(GL_MODELVIEW);
             glPushMatrix();
@@ -99,8 +100,8 @@ class Malla
                                
                 for (int j = 0; j < caras->iesimo(i)->getNumVertices(); j++) {
                   
-                    glColor3d(1,1,0);
-                    glLineWidth(1.0);
+                    
+                    //glLineWidth(1.0);
                     if(modoT == 0)
                         glBegin(GL_POLYGON);
                     else
@@ -126,31 +127,16 @@ class Malla
                         verticeZ = vertices->iesimo(iV)->getZ();
 
                         // Pintamos cada vertice
+                        glColor3d(1,1,0);
                         glVertex3d(verticeX,verticeY,verticeZ);
 
-                        
                         // pintamos cada normal, Lo hacemos asi para no poner 4 normales por cada cara
                         if((modoN == 1) && (j == 0)){
-                            glLineWidth(1.0);
-                            glBegin(GL_LINE_LOOP);
-                                glColor3d(3,3,3);
-                                glVertex3d(normalX,normalY,normalZ);
-                            glEnd();
-                        }else if((modoN == 2) && (j == 0)){
-                            glLineWidth(1.0);
-                            glBegin(GL_LINE);
-                                glColor3d(3,3,3);
-                                glVertex3d(normalX,normalY,normalZ);
-                            glEnd();
-                        }else if((modoN == 3) && (j == 0)){
                             glColor3d(3,3,3);
-                            glVertex3d(normalX,normalY,normalZ);
+                            glVertex3d(verticeX-normalX,verticeY-normalY,verticeZ-normalZ);
                         }
-                        
-                        
                     }
                     glEnd();
-                   
                 }
             }
 

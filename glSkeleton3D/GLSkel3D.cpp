@@ -324,19 +324,11 @@ void __fastcall TGLForm3D::FormKeyPress(TObject *Sender, char &Key)
             break;
 
         // Teclas para mostrar o no las normales
-        case 'k':   // Se ocultan las normales
-            modoNormales = 0;
-            break;
-
-        // Pruebas para mostrar las normales
-        case 'q':
+        case 'j':   // Se muestran las normales
             modoNormales = 1;
             break;
-        case 'w':
-            modoNormales = 2;
-            break;
-        case 'e':
-            modoNormales = 3;
+        case 'k':   // Se ocultan las normales
+            modoNormales = 0;
             break;
         
         default:
