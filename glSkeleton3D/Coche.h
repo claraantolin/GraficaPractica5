@@ -24,6 +24,7 @@ class Coche : public Malla
 
         int numLados;
         int numRodajas;
+        int pos;
 
    public:
 
@@ -43,6 +44,8 @@ class Coche : public Malla
 
             //Llamamos a newell para calcular las normales
             RellenaVectorNormalPorNewell();
+
+            pos=0;
         }
         
         ~Coche(){
@@ -53,18 +56,35 @@ class Coche : public Malla
         GLdouble getAnguloX(){ return anguloX;}
         GLdouble getAnguloY(){ return anguloY;}
         GLdouble getAnguloZ(){ return anguloZ;}
+        GLdouble getpos(){ return pos;}
 
         void setAnguloX(GLdouble angX){ anguloX = angX;}
         void setAnguloY(GLdouble angY){ anguloY = angY;}
         void setAnguloZ(GLdouble angZ){ anguloZ = angZ;}
-       
+        void setPos(GLdouble p){ pos = p;}
+
+
+        void incrementaPos(){
+                pos++;
+                pos = pos % 25;
+                mueveCoche();
+        }
+
+        void decrementaPos(){
+                pos--;
+                pos = pos % 25;
+                mueveCoche();
+        }
+
 //------------------------------------------------------------------------------
                         /***** calculaVertices *****/
 //------------------------------------------------------------------------------
 
         void calculaVertices(){
 
-             Lista<PV3D*>* matriz = hazMatriz(0,7);
+            GLdouble t = (2* M_PI * pos) / 25;
+            Lista<PV3D*>* matriz = hazMatriz(t,7);
+            
             double inc=(2*PI/numLados);
             for(int i=0; i<numLados; i++){
                 PV3D* nodo = new PV3D(   cos(2*PI-i*inc)*0.7  , sin(2*PI-i*inc)*0.7  , 0  ,1);
@@ -202,13 +222,6 @@ class Coche : public Malla
         
             dibuja(0,0);
 
-            /*Color3d(0,1,0);
-            glLineWidth(1.0);
-            glBegin(GL_LINE_LOOP);
-                for(int i =0 ; i<vertices->numElem(); i++)
-                        glVertex3d(vertices->iesimo(i)->getX(), vertices->iesimo(i)->getY(), vertices->iesimo(i)->getZ());
-            glEnd(); */
-
             //Dibujamos las tapas del coche
             glMatrixMode(GL_MODELVIEW);
             glPushMatrix();
@@ -261,6 +274,27 @@ class Coche : public Malla
         }
 
 //------------------------------------------------------------------------------
+
+//------------------------------------------------------------------------------
+                        /***** mueveCoche *****/
+//------------------------------------------------------------------------------
+       void mueveCoche( ){
+           delete vertices; delete normales; delete caras;
+
+           vertices = new Lista<PV3D*>();
+           normales = new Lista<PV3D*>();
+           caras = new Lista<Cara*>();
+
+           calculaVertices();
+
+           numNormales = numVertices; //=numCaras, frecuentemente
+           numCaras = numVertices;
+           calculaCaras();
+
+           //Llamamos a newell para calcular las normales
+           RellenaVectorNormalPorNewell();
+           
+        }
 
 };
 

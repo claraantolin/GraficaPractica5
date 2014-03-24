@@ -270,6 +270,7 @@ void TGLForm3D::crearObjetosEscena() {
     esfera = gluNewQuadric();
     rollerCoaster = new RollerCoaster(10,25);
     coche = new Coche(4,2);
+    coche->incrementaPos();
     modoNormales = 0;
     modoTransparencia = 1;
 }
@@ -335,6 +336,14 @@ void __fastcall TGLForm3D::FormKeyPress(TObject *Sender, char &Key)
             break;
         case 'k':   // Se ocultan las normales
             modoNormales = 0;
+            break;
+
+        //Movimiento del coche
+        case 'q':
+            coche->incrementaPos();
+            break;
+        case 'w':   
+            coche->decrementaPos();
             break;
         
         default:
