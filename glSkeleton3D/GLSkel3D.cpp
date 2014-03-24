@@ -238,7 +238,7 @@ void __fastcall TGLForm3D::GLScene() {
     rollerCoaster->dibujaRoller(modo);
 
 
-    //coche->dibujaCoche();
+    coche->dibujaCoche();
 
     //Dibujo de la esfera blanca
     /*glColor3d(1.0, 1.0, 1.0);
@@ -269,7 +269,7 @@ void __fastcall TGLForm3D::FormDestroy(TObject *Sender) {
 void TGLForm3D::crearObjetosEscena() {
     esfera = gluNewQuadric();
     rollerCoaster = new RollerCoaster(10,25);
-    coche = new Coche(10,25);
+    coche = new Coche(4,2);
     modo = 0;
 }
 

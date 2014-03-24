@@ -98,7 +98,7 @@ class Malla
               
                 for (int j = 0; j < caras->iesimo(i)->getNumVertices(); j++) {
                   
-                    glColor3d(0,3,0);
+                    glColor3d(1,1,0);
                     glLineWidth(1.0);
                     glBegin(GL_LINE_LOOP);
 
