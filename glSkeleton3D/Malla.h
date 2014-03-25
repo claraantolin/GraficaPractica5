@@ -129,23 +129,28 @@ class Malla
                         glBegin(GL_LINE_LOOP);
 
                     for (int j = 0; j < caras->iesimo(i)-> getNumVertices(); j++) {
-                         
-                        int iN = caras->iesimo(i)-> getIndiceNormal(j);
-                        int iV = caras->iesimo(i)-> getIndiceVertice(j);
-     
-                        normalX = normales->iesimo(iN)->getX();
-                        normalY = normales->iesimo(iN)->getY();
-                        normalZ = normales->iesimo(iN)->getZ();
+
+                        Cara* cara = caras->iesimo(i);
+                        int iN = cara->getIndiceNormal(j);
+                        int iV = cara->getIndiceVertice(j);
+
+                        PV3D* normal = normales->iesimo(iN);
+                        normalX = normal->getX();
+                        //normalX = normales->iesimoOpt(iN)->getX();
+                        normalY = normal->getY();
+                        //normalY = normales->iesimoOpt(iN)->getY();
+                        normalZ = normal->getZ();
                         
                         // Le asignamos una normal a cada vertice
                         glNormal3d(-normalX,-normalY,-normalZ);
                              
                         //Si hubiera coordenadas de textura, aqui se suministrarian
                         //las coordenadas de textura del vertice j con glTexCoor2f(...);
-                     
-                        verticeX = vertices->iesimo(iV)->getX();
-                        verticeY = vertices->iesimo(iV)->getY();
-                        verticeZ = vertices->iesimo(iV)->getZ();
+
+                        PV3D* vertice = vertices->iesimo(iV);
+                        verticeX = vertice->getX();
+                        verticeY = vertice->getY();
+                        verticeZ = vertice->getZ();
 
                         // Pintamos cada vertice
                         glColor3d(colorR,colorG,colorB);

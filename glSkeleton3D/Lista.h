@@ -43,10 +43,13 @@ class Lista
       Nodo<T>* ultimo;
       int elem;
 
+      Nodo<T>* puntIesimo;
+      int numIesimo;
+
    public:
 
  // ------CONSTRUCTORA----------------------
-      Lista(){elem=0; primero=NULL; ultimo=NULL;};
+      Lista(){elem=0; primero=NULL; ultimo=NULL; puntIesimo=NULL; int numIesimo;};
  //----------DESTRUCTORA---------------
       ~Lista()
       {
@@ -78,6 +81,35 @@ class Lista
 
          return aux->info;
       };
+
+      //---------IESIMO ESPECIAL--------------------
+      T iesimoOpt(int n)
+      {
+        int size = elem;
+        if(numIesimo <= n){
+                if(puntIesimo == NULL){
+                        puntIesimo = primero;
+                        numIesimo = 0;
+                }
+                n = n - numIesimo;
+                while((puntIesimo!=NULL) && n>0)
+                {
+                        n--;
+                        puntIesimo=puntIesimo->sig;
+                        numIesimo ++;
+                }
+                return puntIesimo->info;
+        }
+        else{
+                return iesimo(n);
+        }
+      };
+
+      //---------RESETEA PUNTIESIMO--------------------
+      void reseteaPuntIesimo(){
+           puntIesimo = primero;
+           numIesimo = 0;
+      }
 
   //--------PON_ELEM----------------
       bool ponElem(const T& e)
