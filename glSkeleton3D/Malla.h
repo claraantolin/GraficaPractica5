@@ -130,15 +130,13 @@ class Malla
 
                     for (int j = 0; j < caras->iesimo(i)-> getNumVertices(); j++) {
 
-                        Cara* cara = caras->iesimo(i);
+                        Cara* cara = caras->iesimoOpt(i);
                         int iN = cara->getIndiceNormal(j);
                         int iV = cara->getIndiceVertice(j);
 
-                        PV3D* normal = normales->iesimo(iN);
+                        PV3D* normal = normales->iesimoOpt(iN);
                         normalX = normal->getX();
-                        //normalX = normales->iesimoOpt(iN)->getX();
                         normalY = normal->getY();
-                        //normalY = normales->iesimoOpt(iN)->getY();
                         normalZ = normal->getZ();
                         
                         // Le asignamos una normal a cada vertice
@@ -147,7 +145,7 @@ class Malla
                         //Si hubiera coordenadas de textura, aqui se suministrarian
                         //las coordenadas de textura del vertice j con glTexCoor2f(...);
 
-                        PV3D* vertice = vertices->iesimo(iV);
+                        PV3D* vertice = vertices->iesimoOpt(iV);
                         verticeX = vertice->getX();
                         verticeY = vertice->getY();
                         verticeZ = vertice->getZ();
