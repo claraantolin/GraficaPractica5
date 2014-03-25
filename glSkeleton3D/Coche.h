@@ -245,13 +245,15 @@ class Coche : public Malla
                         glVertex3d(vertices->iesimo(i)->getX(), vertices->iesimo(i)->getY(), vertices->iesimo(i)->getZ());
             glEnd();
 
-            glPopMatrix();
-
-
             dibujaRuedas(0);
             dibujaRuedas(3);
             dibujaRuedas(4);
             dibujaRuedas(7);
+
+            glPopMatrix();
+
+
+
 
 
         }
