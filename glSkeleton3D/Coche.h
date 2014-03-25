@@ -236,13 +236,17 @@ class Coche : public Malla
             glLineWidth(1.0);
 
             glBegin(GL_POLYGON);
-                for(int i =0 ; i<4; i++)
-                        glVertex3d(vertices->iesimo(i)->getX(), vertices->iesimo(i)->getY(), vertices->iesimo(i)->getZ());
+                for(int i =0 ; i<4; i++){
+                        PV3D* vertice = vertices->iesimo(i);
+                        glVertex3d(vertice->getX(), vertice->getY(), vertice->getZ());
+                }
             glEnd();
 
             glBegin(GL_POLYGON);
-                for(int i =4 ; i<8; i++)
-                        glVertex3d(vertices->iesimo(i)->getX(), vertices->iesimo(i)->getY(), vertices->iesimo(i)->getZ());
+                for(int i =4 ; i<8; i++){
+                        PV3D* vertice = vertices->iesimo(i);
+                        glVertex3d(vertice->getX(), vertice->getY(), vertice->getZ());
+                }
             glEnd();
 
             dibujaRuedas(0);
@@ -315,9 +319,12 @@ class Coche : public Malla
 
 
         glMatrixMode(GL_MODELVIEW);
+
+            PV3D* punto = vertices->iesimo(vertice);
+
             glPushMatrix();
             GLUquadricObj* cilindro = gluNewQuadric();
-            glTranslated(vertices->iesimo(vertice)->getX(), vertices->iesimo(vertice)->getY(), vertices->iesimo(vertice)->getZ());
+            glTranslated(punto->getX(), punto->getY(), punto->getZ());
             glColor3d(0,0,0);
             gluCylinder(cilindro, 0.2, 0.2, 0.2, 10, 1);
             glPopMatrix();
@@ -328,7 +335,7 @@ class Coche : public Malla
             GLUquadricObj* tapa = gluNewQuadric();
             gluQuadricDrawStyle(tapa,GLU_FILL);
 
-            glTranslated(vertices->iesimo(vertice)->getX() , vertices->iesimo(vertice)->getY(), vertices->iesimo(vertice)->getZ()+0.2);
+            glTranslated(punto->getX() , punto->getY(), punto->getZ()+0.2);
             glColor3d(0,0,0);
             gluDisk(tapa, 0,0.2,32 ,32);
             glPopMatrix();
