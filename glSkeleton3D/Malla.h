@@ -128,7 +128,8 @@ class Malla
                     else
                         glBegin(GL_LINE_LOOP);
 
-                    for (int j = 0; j < caras->iesimo(i)-> getNumVertices(); j++) {
+                    Cara* cara = caras->iesimoOpt(i);
+                    for (int j = 0; j < cara->getNumVertices(); j++) {
 
                         Cara* cara = caras->iesimoOpt(i);
                         int iN = cara->getIndiceNormal(j);
